@@ -3,26 +3,25 @@
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
 import br.com.fiap.fiapeats.core.domain.Order;
 import br.com.fiap.fiapeats.core.domain.Product;
+import java.util.List;
+import java.util.UUID;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.List;
-import java.util.UUID;
-
 @Mapper(componentModel = &quot;spring&quot;)
 public interface OrderMapper {
 
-    @Mapping(target = &quot;id&quot;, ignore = true)
-    @Mapping(target = &quot;idStatus&quot;, ignore = true)
-    @Mapping(target = &quot;createTimestamp&quot;, ignore = true)
-    @Mapping(target = &quot;timeWaiting&quot;, ignore = true)
-    @Mapping(target = &quot;products&quot;, source = &quot;idProducts&quot;, qualifiedByName = &quot;mapIdsToProducts&quot;)
-    Order toOrderFromOrderRequest(OrderRequest orderRequest);
+  @Mapping(target = &quot;id&quot;, ignore = true)
+  @Mapping(target = &quot;idStatus&quot;, ignore = true)
+  @Mapping(target = &quot;createTimestamp&quot;, ignore = true)
+  @Mapping(target = &quot;timeWaiting&quot;, ignore = true)
+  @Mapping(target = &quot;products&quot;, source = &quot;idProducts&quot;, qualifiedByName = &quot;mapIdsToProducts&quot;)
+  Order toOrderFromOrderRequest(OrderRequest orderRequest);
 
-    @Named(&quot;mapIdsToProducts&quot;)
-    static List&lt;Product&gt; mapIdsToProducts(List&lt;UUID&gt; ids) {
-<span class="nc" id="L25">        return ids.stream().map(Product::new).toList();</span>
-    }
+  @Named(&quot;mapIdsToProducts&quot;)
+  static List&lt;Product&gt; mapIdsToProducts(List&lt;UUID&gt; ids) {
+<span class="nc" id="L24">    return ids.stream().map(Product::new).toList();</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

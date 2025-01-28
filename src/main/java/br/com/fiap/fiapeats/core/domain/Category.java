@@ -1,28 +1,27 @@
 package br.com.fiap.fiapeats.core.domain;
 
 public class Category {
-    private Long id;
-    private String description;
+  private Long id;
+  private String description;
 
-    public Category(Long id, String description) {
-        this.id = id;
-        this.description = description;
-    }
+  public Category(Long id, String description) {
+    this.id = id;
+    this.description = description;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

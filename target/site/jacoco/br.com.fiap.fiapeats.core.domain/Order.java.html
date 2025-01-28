@@ -7,78 +7,85 @@ import java.util.UUID;
 
 public class Order {
 
-    private UUID id;
-    private List&lt;Product&gt; products;
-    private String taxId;
-    private BigDecimal value;
-    private Long idStatus;
-    private LocalDateTime createTimestamp;
-    private int timeWaiting;
+  private UUID id;
+  private List&lt;Product&gt; products;
+  private String taxId;
+  private BigDecimal value;
+  private Long idStatus;
+  private LocalDateTime createTimestamp;
+  private int timeWaiting;
 
-<span class="nc" id="L18">    public Order(UUID id, List&lt;Product&gt; products, String taxId, BigDecimal value, Long idStatus, LocalDateTime createTimestamp, int timeWaiting) {</span>
-<span class="nc" id="L19">        this.id = id;</span>
-<span class="nc" id="L20">        this.products = products;</span>
-<span class="nc" id="L21">        this.taxId = taxId;</span>
-<span class="nc" id="L22">        this.value = value;</span>
-<span class="nc" id="L23">        this.idStatus = idStatus;</span>
-<span class="nc" id="L24">        this.createTimestamp = createTimestamp;</span>
-<span class="nc" id="L25">        this.timeWaiting = timeWaiting;</span>
-<span class="nc" id="L26">    }</span>
+  public Order(
+      UUID id,
+      List&lt;Product&gt; products,
+      String taxId,
+      BigDecimal value,
+      Long idStatus,
+      LocalDateTime createTimestamp,
+<span class="nc" id="L25">      int timeWaiting) {</span>
+<span class="nc" id="L26">    this.id = id;</span>
+<span class="nc" id="L27">    this.products = products;</span>
+<span class="nc" id="L28">    this.taxId = taxId;</span>
+<span class="nc" id="L29">    this.value = value;</span>
+<span class="nc" id="L30">    this.idStatus = idStatus;</span>
+<span class="nc" id="L31">    this.createTimestamp = createTimestamp;</span>
+<span class="nc" id="L32">    this.timeWaiting = timeWaiting;</span>
+<span class="nc" id="L33">  }</span>
 
-    public UUID getId() {
-<span class="nc" id="L29">        return id;</span>
-    }
+  public UUID getId() {
+<span class="nc" id="L36">    return id;</span>
+  }
 
-    public void setId(UUID id) {
-<span class="nc" id="L33">        this.id = id;</span>
-<span class="nc" id="L34">    }</span>
+  public void setId(UUID id) {
+<span class="nc" id="L40">    this.id = id;</span>
+<span class="nc" id="L41">  }</span>
 
-    public List&lt;Product&gt; getProducts() {
-<span class="nc" id="L37">        return products;</span>
-    }
+  public List&lt;Product&gt; getProducts() {
+<span class="nc" id="L44">    return products;</span>
+  }
 
-    public void setProducts(List&lt;Product&gt; products) {
-<span class="nc" id="L41">        this.products = products;</span>
-<span class="nc" id="L42">    }</span>
+  public void setProducts(List&lt;Product&gt; products) {
+<span class="nc" id="L48">    this.products = products;</span>
+<span class="nc" id="L49">  }</span>
 
-    public String getTaxId() {
-<span class="nc" id="L45">        return taxId;</span>
-    }
+  public String getTaxId() {
+<span class="nc" id="L52">    return taxId;</span>
+  }
 
-    public void setTaxId(String taxId) {
-<span class="nc" id="L49">        this.taxId = taxId;</span>
-<span class="nc" id="L50">    }</span>
+  public void setTaxId(String taxId) {
+<span class="nc" id="L56">    this.taxId = taxId;</span>
+<span class="nc" id="L57">  }</span>
 
-    public BigDecimal getValue() {
-<span class="nc" id="L53">        return value;</span>
-    }
+  public BigDecimal getValue() {
+<span class="nc" id="L60">    return value;</span>
+  }
 
-    public void setValue(BigDecimal value) {
-<span class="nc" id="L57">        this.value = value;</span>
-<span class="nc" id="L58">    }</span>
+  public void setValue(BigDecimal value) {
+<span class="nc" id="L64">    this.value = value;</span>
+<span class="nc" id="L65">  }</span>
 
-    public Long getIdStatus() {
-<span class="nc" id="L61">        return idStatus;</span>
-    }
+  public Long getIdStatus() {
+<span class="nc" id="L68">    return idStatus;</span>
+  }
 
-    public void setIdStatus(Long idStatus) {
-<span class="nc" id="L65">        this.idStatus = idStatus;</span>
-<span class="nc" id="L66">    }</span>
+  public void setIdStatus(Long idStatus) {
+<span class="nc" id="L72">    this.idStatus = idStatus;</span>
+<span class="nc" id="L73">  }</span>
 
-    public LocalDateTime getCreateTimestamp() {
-<span class="nc" id="L69">        return createTimestamp;</span>
-    }
+  public LocalDateTime getCreateTimestamp() {
+<span class="nc" id="L76">    return createTimestamp;</span>
+  }
 
-    public void setCreateTimestamp(LocalDateTime createTimestamp) {
-<span class="nc" id="L73">        this.createTimestamp = createTimestamp;</span>
-<span class="nc" id="L74">    }</span>
+  public void setCreateTimestamp(LocalDateTime createTimestamp) {
+<span class="nc" id="L80">    this.createTimestamp = createTimestamp;</span>
+<span class="nc" id="L81">  }</span>
 
-    public int getTimeWaiting() {
-<span class="nc" id="L77">        return timeWaiting;</span>
-    }
+  public int getTimeWaiting() {
+<span class="nc" id="L84">    return timeWaiting;</span>
+  }
 
-    public void setTimeWaiting(int timeWaiting) {
-<span class="nc" id="L81">        this.timeWaiting = timeWaiting;</span>
-<span class="nc" id="L82">    }</span>
+  public void setTimeWaiting(int timeWaiting) {
+<span class="nc" id="L88">    this.timeWaiting = timeWaiting;</span>
+<span class="nc" id="L89">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

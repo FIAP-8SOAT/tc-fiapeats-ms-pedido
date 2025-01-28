@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FeignProductMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tc-fiapeats-ms-pedido</a> &gt; <a href="index.source.html" class="el_package">br.com.fiap.fiapeats.adapter.mapper</a> &gt; <span class="el_source">FeignProductMapperImpl.java</span></div><h1>FeignProductMapperImpl.java</h1><pre class="source lang-java linenums">package br.com.fiap.fiapeats.adapter.mapper;
+
+import br.com.fiap.fiapeats.adapter.out.feign.contracts.response.FeignFindProductsResponse;
+import br.com.fiap.fiapeats.core.domain.Product;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2025-01-28T17:15:05-0300&quot;,
+    comments = &quot;version: 1.6.0.Beta1, compiler: javac, environment: Java 17.0.11 (Amazon.com Inc.)&quot;
+)
+@Component
+<span class="fc" id="L16">public class FeignProductMapperImpl implements FeignProductMapper {</span>
+
+    @Override
+    public Product toProductFromFeignProduct(FeignFindProductsResponse response) {
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if ( response == null ) {</span>
+<span class="nc" id="L21">            return null;</span>
+        }
+
+<span class="nc" id="L24">        Product product = new Product();</span>
+
+<span class="nc" id="L26">        product.setCategory( FeignProductMapper.mapCategory( response.getCategory() ) );</span>
+<span class="nc" id="L27">        product.setId( response.getId() );</span>
+<span class="nc" id="L28">        product.setName( response.getName() );</span>
+<span class="nc" id="L29">        product.setDescription( response.getDescription() );</span>
+<span class="nc" id="L30">        product.setValue( response.getValue() );</span>
+<span class="nc" id="L31">        product.setImageUrl( response.getImageUrl() );</span>
+
+<span class="nc" id="L33">        return product;</span>
+    }
+
+    @Override
+    public List&lt;Product&gt; toProductListFromFeignProductList(List&lt;FeignFindProductsResponse&gt; responses) {
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if ( responses == null ) {</span>
+<span class="nc" id="L39">            return null;</span>
+        }
+
+<span class="nc" id="L42">        List&lt;Product&gt; list = new ArrayList&lt;Product&gt;( responses.size() );</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        for ( FeignFindProductsResponse feignFindProductsResponse : responses ) {</span>
+<span class="nc" id="L44">            list.add( toProductFromFeignProduct( feignFindProductsResponse ) );</span>
+<span class="nc" id="L45">        }</span>
+
+<span class="nc" id="L47">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

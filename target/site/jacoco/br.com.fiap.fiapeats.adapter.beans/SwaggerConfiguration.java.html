@@ -8,22 +8,19 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 <span class="fc" id="L10">public class SwaggerConfiguration {</span>
-    @Bean
-    public OpenAPI openAPI() {
-<span class="fc" id="L13">        return new OpenAPI()</span>
-<span class="fc" id="L14">                .info(</span>
-                        new Info()
-<span class="fc" id="L16">                                .title(&quot;FiapEats MS Pedido&quot;)</span>
-<span class="fc" id="L17">                                .description(&quot;Documentação técnica para serviço de Pedidos&quot;)</span>
-<span class="fc" id="L18">                                .version(&quot;1.0.0&quot;));</span>
-    }
+  @Bean
+  public OpenAPI openAPI() {
+<span class="fc" id="L13">    return new OpenAPI()</span>
+<span class="fc" id="L14">        .info(</span>
+            new Info()
+<span class="fc" id="L16">                .title(&quot;FiapEats MS Pedido&quot;)</span>
+<span class="fc" id="L17">                .description(&quot;Documentação técnica para serviço de Pedidos&quot;)</span>
+<span class="fc" id="L18">                .version(&quot;1.0.0&quot;));</span>
+  }
 
-    @Bean
-    public GroupedOpenApi internal() {
-<span class="fc" id="L23">        return GroupedOpenApi.builder()</span>
-<span class="fc" id="L24">                .pathsToMatch(&quot;/order/**&quot;)</span>
-<span class="fc" id="L25">                .group(&quot;internal&quot;)</span>
-<span class="fc" id="L26">                .build();</span>
-    }
+  @Bean
+  public GroupedOpenApi internal() {
+<span class="fc" id="L23">    return GroupedOpenApi.builder().pathsToMatch(&quot;/order/**&quot;).group(&quot;internal&quot;).build();</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
