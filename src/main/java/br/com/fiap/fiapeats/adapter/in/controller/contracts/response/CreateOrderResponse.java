@@ -1,0 +1,30 @@
+package br.com.fiap.fiapeats.adapter.in.controller.contracts.response;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class CreateOrderResponse {
+    @JsonProperty("idPedido")
+    private String orderId;
+
+    @JsonProperty("cliCpf")
+    private String taxId;
+
+    @JsonProperty("status")
+    private Long status;
+
+    @JsonProperty("tempoEspera")
+    private int timeWaiting;
+
+    @JsonProperty("dataHoraCriacao")
+    private LocalDateTime createdDateTime;
+}

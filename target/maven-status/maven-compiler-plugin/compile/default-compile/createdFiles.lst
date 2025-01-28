@@ -1,0 +1,16 @@
+br/com/fiap/fiapeats/core/domain/Product.class
+br/com/fiap/fiapeats/adapter/in/controller/contracts/response/CreateOrderResponse$CreateOrderResponseBuilder.class
+br/com/fiap/fiapeats/adapter/mapper/OrderMapper.class
+br/com/fiap/fiapeats/adapter/in/controller/contracts/request/OrderRequest.class
+br/com/fiap/fiapeats/adapter/in/controller/OrderController.class
+br/com/fiap/fiapeats/adapter/mapper/OrderMapperImpl.class
+br/com/fiap/fiapeats/adapter/beans/BeanConfiguration.class
+br/com/fiap/fiapeats/core/ports/in/CreateOrderPort.class
+br/com/fiap/fiapeats/adapter/in/controller/contracts/request/OrderRequest$OrderRequestBuilder.class
+br/com/fiap/fiapeats/adapter/in/controller/contracts/response/CreateOrderResponse.class
+br/com/fiap/fiapeats/adapter/beans/SwaggerConfiguration.class
+br/com/fiap/fiapeats/core/utils/Constants.class
+br/com/fiap/fiapeats/core/domain/Category.class
+br/com/fiap/fiapeats/TcFiapeatsMsPedidoApplication.class
+br/com/fiap/fiapeats/core/domain/Order.class
+br/com/fiap/fiapeats/core/usecases/CreateOrderImpl.class
