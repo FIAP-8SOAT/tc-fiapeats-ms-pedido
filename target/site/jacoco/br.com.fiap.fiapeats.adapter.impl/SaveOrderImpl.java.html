@@ -4,24 +4,23 @@ import br.com.fiap.fiapeats.adapter.mapper.OrderMapper;
 import br.com.fiap.fiapeats.adapter.out.persistence.repository.OrderRepository;
 import br.com.fiap.fiapeats.core.domain.Order;
 import br.com.fiap.fiapeats.core.ports.out.SaveOrderPort;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SaveOrderImpl implements SaveOrderPort {
 
-    private final OrderRepository orderRepository;
+  private final OrderRepository orderRepository;
 
-    private final OrderMapper orderMapper;
+  private final OrderMapper orderMapper;
 
-<span class="fc" id="L17">    public SaveOrderImpl(OrderRepository orderRepository, OrderMapper orderMapper) {</span>
-<span class="fc" id="L18">        this.orderRepository = orderRepository;</span>
-<span class="fc" id="L19">        this.orderMapper = orderMapper;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L16">  public SaveOrderImpl(OrderRepository orderRepository, OrderMapper orderMapper) {</span>
+<span class="fc" id="L17">    this.orderRepository = orderRepository;</span>
+<span class="fc" id="L18">    this.orderMapper = orderMapper;</span>
+<span class="fc" id="L19">  }</span>
 
-    @Override
-    public void save(Order order) {
-<span class="nc" id="L24">        orderRepository.save(orderMapper.toOrderDocumentFromOrder(order));</span>
-<span class="nc" id="L25">    }</span>
+  @Override
+  public void save(Order order) {
+<span class="nc" id="L23">    orderRepository.save(orderMapper.toOrderDocumentFromOrder(order));</span>
+<span class="nc" id="L24">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

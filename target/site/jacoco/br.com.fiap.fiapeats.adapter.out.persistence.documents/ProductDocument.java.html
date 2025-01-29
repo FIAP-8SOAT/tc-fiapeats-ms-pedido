@@ -2,29 +2,24 @@
 
 import br.com.fiap.fiapeats.core.domain.Category;
 import br.com.fiap.fiapeats.core.domain.Product;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import nonapi.io.github.classgraph.json.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @AllArgsConstructor
 @Document(collection = &quot;products&quot;)
 public class ProductDocument implements Serializable {
-    @Id
-    private String id;
-    private String name;
-    private String description;
-    private BigDecimal value;
-    private Category category;
-    private String imageUrl;
+  @Id private String id;
+  private String name;
+  private String description;
+  private BigDecimal value;
+  private Category category;
+  private String imageUrl;
 
-<span class="nc" id="L27">    public ProductDocument(Product product) {</span>
-<span class="nc" id="L28">    }</span>
+<span class="nc" id="L23">  public ProductDocument(Product product) {}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -26,21 +26,25 @@ public interface OrderMapper {
 <span class="nc" id="L26">    return ids.stream().map(Product::new).toList();</span>
   }
 
-  @Mapping(target = &quot;products&quot;, source = &quot;products&quot;, qualifiedByName = &quot;toListProducDocumentFromListProduct&quot;)
+  @Mapping(
+      target = &quot;products&quot;,
+      source = &quot;products&quot;,
+      qualifiedByName = &quot;toListProducDocumentFromListProduct&quot;)
   OrderDocument toOrderDocumentFromOrder(Order order);
 
   @Named(&quot;toListProducDocumentFromListProduct&quot;)
   static List&lt;ProductDocument&gt; toListProducDocumentFromListProduct(List&lt;Product&gt; products) {
-<span class="nc" id="L34">    return products.stream().map(product -&gt;</span>
-<span class="nc" id="L35">            new ProductDocument(</span>
-<span class="nc" id="L36">                    product.getId().toString(),</span>
-<span class="nc" id="L37">                    product.getName(),</span>
-<span class="nc" id="L38">                    product.getDescription(),</span>
-<span class="nc" id="L39">                    product.getValue(),</span>
-<span class="nc" id="L40">                    product.getCategory(),</span>
-<span class="nc" id="L41">                    product.getImageUrl()</span>
-            )
-<span class="nc" id="L43">    ).toList();</span>
+<span class="nc" id="L37">    return products.stream()</span>
+<span class="nc" id="L38">        .map(</span>
+            product -&gt;
+<span class="nc" id="L40">                new ProductDocument(</span>
+<span class="nc" id="L41">                    product.getId().toString(),</span>
+<span class="nc" id="L42">                    product.getName(),</span>
+<span class="nc" id="L43">                    product.getDescription(),</span>
+<span class="nc" id="L44">                    product.getValue(),</span>
+<span class="nc" id="L45">                    product.getCategory(),</span>
+<span class="nc" id="L46">                    product.getImageUrl()))</span>
+<span class="nc" id="L47">        .toList();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

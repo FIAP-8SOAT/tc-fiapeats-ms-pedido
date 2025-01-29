@@ -1,6 +1,8 @@
 package br.com.fiap.fiapeats.core.domain;
 
-public class Category {
+import java.io.Serializable;
+
+public class Category implements Serializable {
   private Long id;
   private String description;
 

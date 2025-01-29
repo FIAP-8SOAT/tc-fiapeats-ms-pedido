@@ -3,10 +3,10 @@ package br.com.fiap.fiapeats.core.usecases;
 import br.com.fiap.fiapeats.core.domain.Order;
 import br.com.fiap.fiapeats.core.domain.Product;
 import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
+import br.com.fiap.fiapeats.core.ports.out.FeignFindClientPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
 import br.com.fiap.fiapeats.core.ports.out.SaveOrderPort;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.webjars.NotFoundException;
@@ -17,24 +17,24 @@ public class ProcessOrderImpl implements ProcessOrderPort {
 
   private final SaveOrderPort saveOrderPort;
 
+  private final FeignFindClientPort feignFindClientPort;
+
   public ProcessOrderImpl(
-      FeignFindProductsPort feignFindProductsPort, SaveOrderPort saveOrderPort) {
+      FeignFindProductsPort feignFindProductsPort,
+      SaveOrderPort saveOrderPort,
+      FeignFindClientPort feignFindClientPort) {
     this.feignFindProductsPort = feignFindProductsPort;
     this.saveOrderPort = saveOrderPort;
+    this.feignFindClientPort = feignFindClientPort;
   }
 
   @Override
   public void process(Order order) {
-    List<Product> products = feignFindProductsPort.getAllProducts();
+    List<Product> feignProducts = feignFindProductsPort.getAllProducts();
 
-    Set<UUID> idsFeign = products.stream().map(Product::getId).collect(Collectors.toSet());
+    validPorductItens(feignProducts, order);
 
-    boolean allPresent =
-        order.getProducts().stream().map(Product::getId).allMatch(idsFeign::contains);
-
-    if (!allPresent) throw new NotFoundException("Existem produtos na lista que não estão na base");
-
-    // TODO: validar se o usuario tem na request e existe
+    validClient(order);
 
     // TODO: mandar para pagamento
 
@@ -42,6 +42,16 @@ public class ProcessOrderImpl implements ProcessOrderPort {
     order.setId(UUID.randomUUID());
     order.getProducts().get(0).setDescription("cachorro quente");
     saveOrderPort.save(order);
-    String a = "a";
+  }
+
+  void validPorductItens(List<Product> products, Order order) {
+    if (!order.getProducts().stream()
+        .map(Product::getId)
+        .allMatch(products.stream().map(Product::getId).collect(Collectors.toSet())::contains))
+      throw new NotFoundException("Existem produtos na lista que não estão na base");
+  }
+
+  void validClient(Order order) {
+    feignFindClientPort.findClient(order.getTaxId());
   }
 }
