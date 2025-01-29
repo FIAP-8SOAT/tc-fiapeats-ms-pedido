@@ -11,6 +11,7 @@ public class Order {
   private List<Product> products;
   private String taxId;
   private BigDecimal value;
+  private String qrCode;
   private Long idStatus;
   private LocalDateTime createTimestamp;
   private int timeWaiting;
@@ -22,7 +23,8 @@ public class Order {
       BigDecimal value,
       Long idStatus,
       LocalDateTime createTimestamp,
-      int timeWaiting) {
+      int timeWaiting,
+      String qrCode) {
     this.id = id;
     this.products = products;
     this.taxId = taxId;
@@ -30,6 +32,7 @@ public class Order {
     this.idStatus = idStatus;
     this.createTimestamp = createTimestamp;
     this.timeWaiting = timeWaiting;
+    this.qrCode = qrCode;
   }
 
   public UUID getId() {
@@ -86,5 +89,13 @@ public class Order {
 
   public void setTimeWaiting(int timeWaiting) {
     this.timeWaiting = timeWaiting;
+  }
+
+  public String getQrCode() {
+    return qrCode;
+  }
+
+  public void setQrCode(String qrCode) {
+    this.qrCode = qrCode;
   }
 }

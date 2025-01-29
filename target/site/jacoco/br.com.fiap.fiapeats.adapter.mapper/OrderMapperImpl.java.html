@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
-    date = &quot;2025-01-29T13:31:12-0300&quot;,
+    date = &quot;2025-01-29T16:08:11-0300&quot;,
     comments = &quot;version: 1.6.0.Beta1, compiler: javac, environment: Java 17.0.11 (Amazon.com Inc.)&quot;
 )
 @Component
@@ -37,31 +37,32 @@ import org.springframework.stereotype.Component;
 <span class="nc" id="L37">        Long idStatus = null;</span>
 <span class="nc" id="L38">        LocalDateTime createTimestamp = null;</span>
 <span class="nc" id="L39">        int timeWaiting = 0;</span>
+<span class="nc" id="L40">        String qrCode = null;</span>
 
-<span class="nc" id="L41">        Order order = new Order( id, products, taxId, value, idStatus, createTimestamp, timeWaiting );</span>
+<span class="nc" id="L42">        Order order = new Order( id, products, taxId, value, idStatus, createTimestamp, timeWaiting, qrCode );</span>
 
-<span class="nc" id="L43">        return order;</span>
+<span class="nc" id="L44">        return order;</span>
     }
 
     @Override
     public OrderDocument toOrderDocumentFromOrder(Order order) {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">        if ( order == null ) {</span>
-<span class="nc" id="L49">            return null;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if ( order == null ) {</span>
+<span class="nc" id="L50">            return null;</span>
         }
 
-<span class="nc" id="L52">        OrderDocument orderDocument = new OrderDocument();</span>
+<span class="nc" id="L53">        OrderDocument orderDocument = new OrderDocument();</span>
 
-<span class="nc" id="L54">        orderDocument.setProducts( OrderMapper.toListProducDocumentFromListProduct( order.getProducts() ) );</span>
-<span class="nc bnc" id="L55" title="All 2 branches missed.">        if ( order.getId() != null ) {</span>
-<span class="nc" id="L56">            orderDocument.setId( order.getId().toString() );</span>
+<span class="nc" id="L55">        orderDocument.setProducts( OrderMapper.toListProducDocumentFromListProduct( order.getProducts() ) );</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if ( order.getId() != null ) {</span>
+<span class="nc" id="L57">            orderDocument.setId( order.getId().toString() );</span>
         }
-<span class="nc" id="L58">        orderDocument.setTaxId( order.getTaxId() );</span>
-<span class="nc" id="L59">        orderDocument.setValue( order.getValue() );</span>
-<span class="nc" id="L60">        orderDocument.setIdStatus( order.getIdStatus() );</span>
-<span class="nc" id="L61">        orderDocument.setCreateTimestamp( order.getCreateTimestamp() );</span>
-<span class="nc" id="L62">        orderDocument.setTimeWaiting( order.getTimeWaiting() );</span>
+<span class="nc" id="L59">        orderDocument.setTaxId( order.getTaxId() );</span>
+<span class="nc" id="L60">        orderDocument.setValue( order.getValue() );</span>
+<span class="nc" id="L61">        orderDocument.setIdStatus( order.getIdStatus() );</span>
+<span class="nc" id="L62">        orderDocument.setCreateTimestamp( order.getCreateTimestamp() );</span>
+<span class="nc" id="L63">        orderDocument.setTimeWaiting( order.getTimeWaiting() );</span>
 
-<span class="nc" id="L64">        return orderDocument;</span>
+<span class="nc" id="L65">        return orderDocument;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -34,7 +34,7 @@ public class OrderController {
       description = &quot;Recebendo a lista de produtos e valor, cria um novo pedido&quot;)
   @ApiResponses(
       value = {@ApiResponse(responseCode = &quot;200&quot;, description = &quot;Pedido Criado com sucesso&quot;)})
-  public ResponseEntity&lt;CreateOrderResponse&gt; createNeworder(
+  public ResponseEntity&lt;CreateOrderResponse&gt; createNewOrder(
       @RequestBody OrderRequest orderRequest) {
 <span class="nc" id="L39">    ThreadContext.put(Constants.CORRELATION_ID, UUID.randomUUID().toString());</span>
     // log.info(&quot;correlationId={{}} Solicitacao recebida [criarNovoPedido] &quot;,

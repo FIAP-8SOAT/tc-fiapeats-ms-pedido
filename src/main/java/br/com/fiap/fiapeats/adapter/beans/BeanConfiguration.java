@@ -1,10 +1,14 @@
 package br.com.fiap.fiapeats.adapter.beans;
 
+import br.com.fiap.fiapeats.adapter.impl.FeignCreatePaymentPortImpl;
 import br.com.fiap.fiapeats.adapter.impl.FeignFindClientPortImpl;
 import br.com.fiap.fiapeats.adapter.mapper.FeignClientMapper;
+import br.com.fiap.fiapeats.adapter.mapper.FeignPaymentMapper;
+import br.com.fiap.fiapeats.adapter.out.feign.FeignCreatePayment;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignFindClient;
 import br.com.fiap.fiapeats.core.ports.in.CreateOrderPort;
 import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
+import br.com.fiap.fiapeats.core.ports.out.FeignCreatePaymentPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindClientPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
 import br.com.fiap.fiapeats.core.ports.out.SaveOrderPort;
@@ -25,13 +29,21 @@ public class BeanConfiguration {
   public ProcessOrderPort processOrderPort(
       FeignFindProductsPort feignFindProductsPort,
       SaveOrderPort saveOrderPort,
-      FeignFindClientPort feignFindClientPort) {
-    return new ProcessOrderImpl(feignFindProductsPort, saveOrderPort, feignFindClientPort);
+      FeignFindClientPort feignFindClientPort,
+      FeignCreatePaymentPort feignCreatePaymentPort) {
+    return new ProcessOrderImpl(
+        feignFindProductsPort, saveOrderPort, feignFindClientPort, feignCreatePaymentPort);
   }
 
   @Bean
   public FeignFindClientPort feignFindClientPort(
       FeignFindClient feignFindClient, FeignClientMapper feignClientMapper) {
     return new FeignFindClientPortImpl(feignFindClient, feignClientMapper);
+  }
+
+  @Bean
+  public FeignCreatePaymentPort feignCreatePaymentPort(
+      FeignCreatePayment feignCreatePayment, FeignPaymentMapper feignPaymentMapper) {
+    return new FeignCreatePaymentPortImpl(feignCreatePayment, feignPaymentMapper);
   }
 }

@@ -7,10 +7,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 <span class="fc" id="L9">public class FeignConfig {</span>
-    @Bean
-    public ErrorDecoder errorDecoder() {
-<span class="fc" id="L12">        return new FeignErrorDecoder();</span>
-    }
-
+  @Bean
+  public ErrorDecoder errorDecoder() {
+<span class="fc" id="L12">    return new FeignErrorDecoder();</span>
+  }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
