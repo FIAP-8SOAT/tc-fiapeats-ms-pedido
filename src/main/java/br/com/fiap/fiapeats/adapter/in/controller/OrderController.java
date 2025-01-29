@@ -3,7 +3,7 @@ package br.com.fiap.fiapeats.adapter.in.controller;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CreateOrderResponse;
 import br.com.fiap.fiapeats.adapter.mapper.OrderMapper;
-import br.com.fiap.fiapeats.core.ports.in.CreateOrderPort;
+import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
 import br.com.fiap.fiapeats.core.utils.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +25,7 @@ public class OrderController {
 
   @Autowired private OrderMapper orderMapper;
 
-  @Autowired private CreateOrderPort createOrderPort;
+  @Autowired private ProcessOrderPort processOrderPort;
 
   @PostMapping
   @ResponseStatus(HttpStatus.OK)
@@ -40,7 +40,7 @@ public class OrderController {
     // log.info("correlationId={{}} Solicitacao recebida [criarNovoPedido] ",
     // ThreadContext.get(Constants.CORRELATION_ID));
     // log.debug(orderRequest.toString());
-    String vaue = createOrderPort.create(orderMapper.toOrderFromOrderRequest(orderRequest));
+    processOrderPort.process(orderMapper.toOrderFromOrderRequest(orderRequest));
     return ResponseEntity.ok(new CreateOrderResponse());
   }
 }

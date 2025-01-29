@@ -2,21 +2,10 @@
 
 import br.com.fiap.fiapeats.core.domain.Order;
 import br.com.fiap.fiapeats.core.ports.in.CreateOrderPort;
-import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
 
-public class CreateOrderImpl implements CreateOrderPort {
-
-  private final FeignFindProductsPort feignFindProductsPort;
-
-<span class="fc" id="L11">  public CreateOrderImpl(FeignFindProductsPort feignFindProductsPort) {</span>
-<span class="fc" id="L12">    this.feignFindProductsPort = feignFindProductsPort;</span>
-<span class="fc" id="L13">  }</span>
+<span class="fc" id="L6">public class CreateOrderImpl implements CreateOrderPort {</span>
 
   @Override
-  public String create(Order order) {
-<span class="nc" id="L17">    String name = order.getProducts().get(0).getName();</span>
-<span class="nc" id="L18">    feignFindProductsPort.getAllProducts();</span>
-<span class="nc" id="L19">    return &quot;valido&quot;;</span>
-  }
+<span class="nc" id="L9">  public void create(Order order) { /* TODO a fazer */ }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

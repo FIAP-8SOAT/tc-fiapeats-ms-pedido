@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tc-fiapeats-ms-pedido</a> &gt; <a href="index.source.html" class="el_package">br.com.fiap.fiapeats.adapter.mapper</a> &gt; <span class="el_source">OrderMapper.java</span></div><h1>OrderMapper.java</h1><pre class="source lang-java linenums">package br.com.fiap.fiapeats.adapter.mapper;
 
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
+import br.com.fiap.fiapeats.adapter.out.persistence.documents.OrderDocument;
+import br.com.fiap.fiapeats.adapter.out.persistence.documents.ProductDocument;
 import br.com.fiap.fiapeats.core.domain.Order;
 import br.com.fiap.fiapeats.core.domain.Product;
 import java.util.List;
@@ -21,7 +23,24 @@ public interface OrderMapper {
 
   @Named(&quot;mapIdsToProducts&quot;)
   static List&lt;Product&gt; mapIdsToProducts(List&lt;UUID&gt; ids) {
-<span class="nc" id="L24">    return ids.stream().map(Product::new).toList();</span>
+<span class="nc" id="L26">    return ids.stream().map(Product::new).toList();</span>
+  }
+
+  @Mapping(target = &quot;products&quot;, source = &quot;products&quot;, qualifiedByName = &quot;toListProducDocumentFromListProduct&quot;)
+  OrderDocument toOrderDocumentFromOrder(Order order);
+
+  @Named(&quot;toListProducDocumentFromListProduct&quot;)
+  static List&lt;ProductDocument&gt; toListProducDocumentFromListProduct(List&lt;Product&gt; products) {
+<span class="nc" id="L34">    return products.stream().map(product -&gt;</span>
+<span class="nc" id="L35">            new ProductDocument(</span>
+<span class="nc" id="L36">                    product.getId().toString(),</span>
+<span class="nc" id="L37">                    product.getName(),</span>
+<span class="nc" id="L38">                    product.getDescription(),</span>
+<span class="nc" id="L39">                    product.getValue(),</span>
+<span class="nc" id="L40">                    product.getCategory(),</span>
+<span class="nc" id="L41">                    product.getImageUrl()</span>
+            )
+<span class="nc" id="L43">    ).toList();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

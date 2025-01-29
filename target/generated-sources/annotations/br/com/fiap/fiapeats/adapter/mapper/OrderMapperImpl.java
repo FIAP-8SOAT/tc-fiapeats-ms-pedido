@@ -1,6 +1,7 @@
 package br.com.fiap.fiapeats.adapter.mapper;
 
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
+import br.com.fiap.fiapeats.adapter.out.persistence.documents.OrderDocument;
 import br.com.fiap.fiapeats.core.domain.Order;
 import br.com.fiap.fiapeats.core.domain.Product;
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-01-28T17:15:13-0300",
+    date = "2025-01-28T21:41:13-0300",
     comments = "version: 1.6.0.Beta1, compiler: javac, environment: Java 17.0.11 (Amazon.com Inc.)"
 )
 @Component
@@ -40,5 +41,26 @@ public class OrderMapperImpl implements OrderMapper {
         Order order = new Order( id, products, taxId, value, idStatus, createTimestamp, timeWaiting );
 
         return order;
+    }
+
+    @Override
+    public OrderDocument toOrderDocumentFromOrder(Order order) {
+        if ( order == null ) {
+            return null;
+        }
+
+        OrderDocument orderDocument = new OrderDocument();
+
+        orderDocument.setProducts( OrderMapper.toListProducDocumentFromListProduct( order.getProducts() ) );
+        if ( order.getId() != null ) {
+            orderDocument.setId( order.getId().toString() );
+        }
+        orderDocument.setTaxId( order.getTaxId() );
+        orderDocument.setValue( order.getValue() );
+        orderDocument.setIdStatus( order.getIdStatus() );
+        orderDocument.setCreateTimestamp( order.getCreateTimestamp() );
+        orderDocument.setTimeWaiting( order.getTimeWaiting() );
+
+        return orderDocument;
     }
 }

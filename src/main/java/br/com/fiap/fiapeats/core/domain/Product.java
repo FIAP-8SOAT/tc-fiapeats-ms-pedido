@@ -14,8 +14,7 @@ public class Product {
   private Category category;
   private String imageUrl;
 
-  public Product() {
-  }
+  public Product() {}
 
   public Product(UUID id) {
     this.id = id;

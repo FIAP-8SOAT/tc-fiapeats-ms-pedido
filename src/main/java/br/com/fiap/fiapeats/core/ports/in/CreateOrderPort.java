@@ -4,5 +4,5 @@ import br.com.fiap.fiapeats.core.domain.Order;
 
 public interface CreateOrderPort {
 
-  String create(Order order);
+  void create(Order order);
 }
