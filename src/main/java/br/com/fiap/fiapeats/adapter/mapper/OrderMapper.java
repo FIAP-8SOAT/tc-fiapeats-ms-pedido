@@ -15,10 +15,11 @@ import org.mapstruct.Named;
 public interface OrderMapper {
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "idStatus", ignore = true)
+  @Mapping(target = "orderStatus", ignore = true)
   @Mapping(target = "createTimestamp", ignore = true)
   @Mapping(target = "timeWaiting", ignore = true)
   @Mapping(target = "qrCode", ignore = true)
+  @Mapping(target = "paymentStatus", ignore = true)
   @Mapping(target = "products", source = "idProducts", qualifiedByName = "mapIdsToProducts")
   Order toOrderFromOrderRequest(OrderRequest orderRequest);
 
@@ -28,23 +29,23 @@ public interface OrderMapper {
   }
 
   @Mapping(
-          target = "products",
-          source = "products",
-          qualifiedByName = "toListProducDocumentFromListProduct")
+      target = "products",
+      source = "products",
+      qualifiedByName = "toListProducDocumentFromListProduct")
   OrderDocument toOrderDocumentFromOrder(Order order);
 
   @Named("toListProducDocumentFromListProduct")
   static List<ProductDocument> toListProducDocumentFromListProduct(List<Product> products) {
     return products.stream()
-            .map(
-                    product ->
-                            new ProductDocument(
-                                    product.getId().toString(),
-                                    product.getName(),
-                                    product.getDescription(),
-                                    product.getValue(),
-                                    product.getCategory(),
-                                    product.getImageUrl()))
-            .toList();
+        .map(
+            product ->
+                new ProductDocument(
+                    product.getId().toString(),
+                    product.getName(),
+                    product.getDescription(),
+                    product.getValue(),
+                    product.getCategory(),
+                    product.getImageUrl()))
+        .toList();
   }
 }
