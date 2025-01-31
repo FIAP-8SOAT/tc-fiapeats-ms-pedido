@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
     name = "FindClient",
-    url = "http://localhost:8080/fiapeats",
+    url = "${feign.client.url}",
     configuration = FeignErrorDecoder.class)
 public interface FeignFindClient {
 

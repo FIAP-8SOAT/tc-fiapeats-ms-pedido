@@ -10,3 +10,10 @@ spring:
     mongodb:
       uri: mongodb://admin:pass@localhost:27017/admin
       database: admin
+
+
+feign:
+  client:
+    url: http://localhost:8080/fiapeats
+
+

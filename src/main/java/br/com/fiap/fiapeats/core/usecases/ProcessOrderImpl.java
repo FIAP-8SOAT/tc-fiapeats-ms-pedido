@@ -1,9 +1,9 @@
 package br.com.fiap.fiapeats.core.usecases;
 
-import br.com.fiap.fiapeats.core.domain.Category;
-import br.com.fiap.fiapeats.core.domain.Order;
-import br.com.fiap.fiapeats.core.domain.Payment;
-import br.com.fiap.fiapeats.core.domain.Product;
+import br.com.fiap.fiapeats.core.domain.*;
+import br.com.fiap.fiapeats.core.exceptions.ClientNotFoundException;
+import br.com.fiap.fiapeats.core.exceptions.FillOrderPropertiesException;
+import br.com.fiap.fiapeats.core.exceptions.ProductNotFoundException;
 import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignCreatePaymentPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindClientPort;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.webjars.NotFoundException;
 
 public class ProcessOrderImpl implements ProcessOrderPort {
 
@@ -40,7 +39,8 @@ public class ProcessOrderImpl implements ProcessOrderPort {
   }
 
   @Override
-  public void process(Order order) throws Exception {
+  public void process(Order order)
+      throws FillOrderPropertiesException, ClientNotFoundException, ProductNotFoundException {
     order.setId(UUID.randomUUID());
     List<Product> feignProducts = feignFindProductsPort.getAllProducts();
 
@@ -57,18 +57,24 @@ public class ProcessOrderImpl implements ProcessOrderPort {
     // TODO: retornar qrCode para pagamento ao cliente
   }
 
-  private void validPorductItens(List<Product> products, Order order) {
+  private void validPorductItens(List<Product> products, Order order)
+      throws ProductNotFoundException {
     if (!order.getProducts().stream()
         .map(Product::getId)
         .allMatch(products.stream().map(Product::getId).collect(Collectors.toSet())::contains))
-      throw new NotFoundException(Constants.TXT_PRODUCT_NOT_FOUND);
+      throw new ProductNotFoundException(Constants.TXT_PRODUCT_NOT_FOUND);
   }
 
-  void validClient(Order order) {
-    feignFindClientPort.findClient(order.getTaxId());
+  void validClient(Order order) throws ClientNotFoundException {
+    try {
+      feignFindClientPort.findClient(order.getTaxId());
+    } catch (Exception e) {
+      throw new ClientNotFoundException(Constants.TXT_CLIENT_NOT_FOUND);
+    }
   }
 
-  private Order fillOrderProperties(Order order, List<Product> feignProducts) throws Exception {
+  private Order fillOrderProperties(Order order, List<Product> feignProducts)
+      throws FillOrderPropertiesException {
     order.setOrderStatus(Constants.PENDING);
     order.setPaymentStatus(Constants.PENDING);
     order.setCreateTimestamp(LocalDateTime.now());
@@ -94,7 +100,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
                     p.getCategory().getId() == null ? 0L : p.getCategory().getId(),
                     p.getCategory().getDescription()));
       } catch (Exception e) {
-        throw new Exception(e.getMessage());
+        throw new FillOrderPropertiesException(e.getMessage());
       }
     }
     return order;
