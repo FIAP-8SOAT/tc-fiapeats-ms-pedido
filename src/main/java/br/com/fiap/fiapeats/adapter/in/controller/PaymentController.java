@@ -2,8 +2,6 @@ package br.com.fiap.fiapeats.adapter.in.controller;
 
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CreateOrderResponse;
-import br.com.fiap.fiapeats.adapter.mapper.OrderMapper;
-import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
 import br.com.fiap.fiapeats.core.utils.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,7 +10,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.ThreadContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,29 +17,23 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/order")
-public class OrderController {
+@RequestMapping("/payment")
+public class PaymentController {
 
-  @Autowired private OrderMapper orderMapper;
-
-  @Autowired private ProcessOrderPort processOrderPort;
-
-  @PostMapping
+  @PatchMapping
   @ResponseStatus(HttpStatus.OK)
   @Operation(
-      summary = "Cria um novo pedido",
-      description = "Recebendo a lista de produtos e valor, cria um novo pedido")
+      summary = "Atualiza status pagamento",
+      description = "Atualiza o status de pagamento de um pedido")
   @ApiResponses(
-      value = {@ApiResponse(responseCode = "200", description = "Pedido Criado com sucesso")})
-  public ResponseEntity<CreateOrderResponse> createNewOrder(@RequestBody OrderRequest orderRequest)
-      throws Exception {
+      value = {@ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso")})
+  public ResponseEntity<CreateOrderResponse> updatePaymentStatus(
+      @RequestBody OrderRequest orderRequest) throws Exception {
     ThreadContext.put(Constants.CORRELATION_ID, UUID.randomUUID().toString());
     log.info(
-        "correlationId={{}} Solicitacao recebida [createNewOrder] ",
+        "correlationId={{}} Solicitacao recebida [updatePaymentStatus] ",
         ThreadContext.get(Constants.CORRELATION_ID));
     log.debug(orderRequest.toString());
-    return ResponseEntity.ok(
-        orderMapper.toOrderResponseFromOrder(
-            processOrderPort.process(orderMapper.toOrderFromOrderRequest(orderRequest))));
+    return ResponseEntity.ok(new CreateOrderResponse());
   }
 }

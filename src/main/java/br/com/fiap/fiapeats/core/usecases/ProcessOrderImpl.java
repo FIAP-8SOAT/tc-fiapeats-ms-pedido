@@ -10,6 +10,10 @@ import br.com.fiap.fiapeats.core.ports.out.FeignFindClientPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
 import br.com.fiap.fiapeats.core.ports.out.SaveOrderPort;
 import br.com.fiap.fiapeats.core.utils.Constants;
+import org.apache.logging.log4j.ThreadContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -27,11 +31,13 @@ public class ProcessOrderImpl implements ProcessOrderPort {
 
   private final FeignCreatePaymentPort feignCreatePaymentPort;
 
+  private static final Logger log = LoggerFactory.getLogger(ProcessOrderImpl.class);
+
   public ProcessOrderImpl(
-      FeignFindProductsPort feignFindProductsPort,
-      SaveOrderPort saveOrderPort,
-      FeignFindClientPort feignFindClientPort,
-      FeignCreatePaymentPort feignCreatePaymentPort) {
+          FeignFindProductsPort feignFindProductsPort,
+          SaveOrderPort saveOrderPort,
+          FeignFindClientPort feignFindClientPort,
+          FeignCreatePaymentPort feignCreatePaymentPort) {
     this.feignFindProductsPort = feignFindProductsPort;
     this.saveOrderPort = saveOrderPort;
     this.feignFindClientPort = feignFindClientPort;
@@ -42,8 +48,11 @@ public class ProcessOrderImpl implements ProcessOrderPort {
   public Order process(Order order)
       throws FillOrderPropertiesException, ClientNotFoundException, ProductNotFoundException {
     order.setId(UUID.randomUUID());
-    List<Product> feignProducts = feignFindProductsPort.getAllProducts();
+    log.info("[ProcessOrderImpl.process] correlationId{{}} orderId{{}}",
+            ThreadContext.get(Constants.CORRELATION_ID),
+            order.getId());
 
+    List<Product> feignProducts = feignFindProductsPort.getAllProducts();
     validPorductItens(feignProducts, order);
 
     validClient(order);
@@ -53,7 +62,9 @@ public class ProcessOrderImpl implements ProcessOrderPort {
             new Payment("cb2614b9-171c-4792-83d3-9fcdeef4e9ee", "https://teste.com.br")));
 
     saveOrderPort.save(fillOrderProperties(order, feignProducts));
-
+    log.info("[ProcessOrderImpl.process] correlationId{{}} {}",
+            ThreadContext.get(Constants.CORRELATION_ID),
+            order);
     return order;
   }
 

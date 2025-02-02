@@ -11,9 +11,18 @@ spring:
       uri: mongodb://admin:pass@localhost:27017/admin
       database: admin
 
+logging:
+  level:
+    feign: DEBUG
+    feign.client: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+
+
 
 feign:
   client:
     url: http://localhost:8080/fiapeats
+
+
 
 

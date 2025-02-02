@@ -5,6 +5,9 @@ import br.com.fiap.fiapeats.adapter.out.feign.FeignFindProducts;
 import br.com.fiap.fiapeats.core.domain.Product;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
 import java.util.List;
+
+import br.com.fiap.fiapeats.core.utils.Constants;
+import org.apache.logging.log4j.ThreadContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,6 +24,6 @@ public class FeignFindProductPortImpl implements FeignFindProductsPort {
 
   @Override
   public List<Product> getAllProducts() {
-    return feignProductMapper.toProductListFromFeignProductList(feignFindProducts.getAllProducts());
+    return feignProductMapper.toProductListFromFeignProductList(feignFindProducts.getAllProducts(ThreadContext.get(Constants.CORRELATION_ID)));
   }
 }

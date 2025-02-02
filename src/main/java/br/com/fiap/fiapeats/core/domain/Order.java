@@ -109,4 +109,20 @@ public class Order {
   public void setPaymentStatus(String paymentStatus) {
     this.paymentStatus = paymentStatus;
   }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+            "id=" + id +
+            ", products=" + (products != null ? products.toString() : "[]") +
+            ", taxId='" + taxId + '\'' +
+            ", value=" + value +
+            ", qrCode='" + qrCode + '\'' +
+            ", orderStatus='" + orderStatus + '\'' +
+            ", paymentStatus='" + paymentStatus + '\'' +
+            ", createTimestamp=" + createTimestamp +
+            ", timeWaiting=" + timeWaiting +
+            '}';
+  }
+
 }
