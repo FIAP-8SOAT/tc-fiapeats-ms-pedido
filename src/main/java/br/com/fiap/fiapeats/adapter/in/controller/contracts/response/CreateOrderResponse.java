@@ -19,11 +19,14 @@ public class CreateOrderResponse {
   private String taxId;
 
   @JsonProperty("status")
-  private Long status;
+  private String status;
 
   @JsonProperty("tempoEspera")
   private int timeWaiting;
 
   @JsonProperty("dataHoraCriacao")
-  private LocalDateTime createdDateTime;
+  private LocalDateTime createTimestamp;
+
+  @JsonProperty("QrCodePagamento")
+  private String qrCode;
 }

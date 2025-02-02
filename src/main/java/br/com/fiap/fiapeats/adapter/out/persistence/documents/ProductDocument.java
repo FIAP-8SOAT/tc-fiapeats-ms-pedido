@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data

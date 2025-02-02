@@ -1,6 +1,7 @@
 package br.com.fiap.fiapeats.adapter.mapper;
 
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
+import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CreateOrderResponse;
 import br.com.fiap.fiapeats.adapter.out.persistence.documents.OrderDocument;
 import br.com.fiap.fiapeats.adapter.out.persistence.documents.ProductDocument;
 import br.com.fiap.fiapeats.core.domain.Order;
@@ -48,4 +49,9 @@ public interface OrderMapper {
                     product.getImageUrl()))
         .toList();
   }
+
+  @Mapping(target = "qrCode", source = "qrCode")
+  @Mapping(target = "orderId", source = "id")
+  @Mapping(target = "status", source = "orderStatus")
+  CreateOrderResponse toOrderResponseFromOrder(Order order);
 }

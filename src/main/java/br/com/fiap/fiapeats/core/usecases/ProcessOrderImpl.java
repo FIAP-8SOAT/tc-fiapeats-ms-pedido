@@ -39,7 +39,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
   }
 
   @Override
-  public void process(Order order)
+  public Order process(Order order)
       throws FillOrderPropertiesException, ClientNotFoundException, ProductNotFoundException {
     order.setId(UUID.randomUUID());
     List<Product> feignProducts = feignFindProductsPort.getAllProducts();
@@ -54,7 +54,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
 
     saveOrderPort.save(fillOrderProperties(order, feignProducts));
 
-    // TODO: retornar qrCode para pagamento ao cliente
+    return order;
   }
 
   private void validPorductItens(List<Product> products, Order order)
@@ -66,6 +66,10 @@ public class ProcessOrderImpl implements ProcessOrderPort {
   }
 
   void validClient(Order order) throws ClientNotFoundException {
+    if (order.getTaxId() == null) {
+      order.setTaxId("");
+      return;
+    }
     try {
       feignFindClientPort.findClient(order.getTaxId());
     } catch (Exception e) {
@@ -79,7 +83,6 @@ public class ProcessOrderImpl implements ProcessOrderPort {
     order.setPaymentStatus(Constants.PENDING);
     order.setCreateTimestamp(LocalDateTime.now());
     order.setTimeWaiting(10);
-
     Map<UUID, Product> mapProduct = new HashMap<>();
     for (Product item : feignProducts) {
       mapProduct.put(item.getId(), item);
