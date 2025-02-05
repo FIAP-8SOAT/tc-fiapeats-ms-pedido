@@ -20,7 +20,7 @@ public class FeignFindClientPortImpl implements FeignFindClientPort {
 
   @Override
   public Client findClient(String document) {
-    return feignClientMapper.toClientFromFeignClient(feignFindClient.getClient(document,
-            ThreadContext.get(Constants.CORRELATION_ID)));
+    return feignClientMapper.toClientFromFeignClient(
+        feignFindClient.getClient(document, ThreadContext.get(Constants.CORRELATION_ID)));
   }
 }

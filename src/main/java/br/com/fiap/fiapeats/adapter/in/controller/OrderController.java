@@ -40,7 +40,7 @@ public class OrderController {
     log.info(
         "correlationId={{}} Solicitacao recebida [createNewOrder] ",
         ThreadContext.get(Constants.CORRELATION_ID));
-    log.debug(orderRequest.toString());
+    log.info(orderRequest.toString());
     return ResponseEntity.ok(
         orderMapper.toOrderResponseFromOrder(
             processOrderPort.process(orderMapper.toOrderFromOrderRequest(orderRequest))));

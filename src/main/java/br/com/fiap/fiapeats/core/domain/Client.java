@@ -34,4 +34,19 @@ public class Client {
   public void setDocument(String document) {
     this.document = document;
   }
+
+  @Override
+  public String toString() {
+    return "Client{"
+        + "name='"
+        + name
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", document='"
+        + document
+        + '\''
+        + '}';
+  }
 }

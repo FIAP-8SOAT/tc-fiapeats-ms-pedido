@@ -6,11 +6,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(
-    name = "FindProducts",
-    url = "${feign.client.url}")
+@FeignClient(name = "FindProducts", url = "${feign.client.url}")
 public interface FeignFindProducts {
 
   @GetMapping("/produto")
-  List<FeignFindProductsResponse> getAllProducts(@RequestHeader("correlationId") String correlationId);
+  List<FeignFindProductsResponse> getAllProducts(
+      @RequestHeader("correlationId") String correlationId);
 }

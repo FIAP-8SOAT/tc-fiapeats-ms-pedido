@@ -20,7 +20,8 @@ public class OrderDocument implements Serializable {
 
   private String taxId;
   private BigDecimal value;
-  private Long idStatus;
+  private String orderStatus;
+  private PaymentDocument payment;
   private LocalDateTime createTimestamp;
   private int timeWaiting;
 }

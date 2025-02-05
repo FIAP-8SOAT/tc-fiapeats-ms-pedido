@@ -86,14 +86,22 @@ public class Product {
 
   @Override
   public String toString() {
-    return "Product{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", description='" + description + '\'' +
-            ", value=" + value +
-            ", category=" + (category != null ? category.toString() : "None") +
-            ", imageUrl='" + imageUrl + '\'' +
-            '}';
+    return "Product{"
+        + "id="
+        + id
+        + ", name='"
+        + name
+        + '\''
+        + ", description='"
+        + description
+        + '\''
+        + ", value="
+        + value
+        + ", category="
+        + (category != null ? category.toString() : "None")
+        + ", imageUrl='"
+        + imageUrl
+        + '\''
+        + '}';
   }
-
 }

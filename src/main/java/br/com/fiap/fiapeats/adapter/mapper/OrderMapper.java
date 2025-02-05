@@ -21,6 +21,7 @@ public interface OrderMapper {
   @Mapping(target = "timeWaiting", ignore = true)
   @Mapping(target = "qrCode", ignore = true)
   @Mapping(target = "paymentStatus", ignore = true)
+  @Mapping(target = "paymentId", ignore = true)
   @Mapping(target = "products", source = "idProducts", qualifiedByName = "mapIdsToProducts")
   Order toOrderFromOrderRequest(OrderRequest orderRequest);
 
@@ -33,6 +34,9 @@ public interface OrderMapper {
       target = "products",
       source = "products",
       qualifiedByName = "toListProducDocumentFromListProduct")
+  @Mapping(target = "payment.paymentStatus", source = "paymentStatus")
+  @Mapping(target = "payment.qrCode", source = "qrCode")
+  @Mapping(target = "payment.paymentId", source = "paymentId")
   OrderDocument toOrderDocumentFromOrder(Order order);
 
   @Named("toListProducDocumentFromListProduct")
@@ -54,4 +58,28 @@ public interface OrderMapper {
   @Mapping(target = "orderId", source = "id")
   @Mapping(target = "status", source = "orderStatus")
   CreateOrderResponse toOrderResponseFromOrder(Order order);
+
+  @Mapping(
+      target = "products",
+      source = "products",
+      qualifiedByName = "toListProducFromListProductDocument")
+  @Mapping(target = "paymentStatus", source = "payment.paymentStatus")
+  @Mapping(target = "qrCode", source = "payment.qrCode")
+  @Mapping(target = "paymentId", source = "payment.paymentId")
+  Order toOrderFromOrderDocument(OrderDocument orderDocument);
+
+  @Named("toListProducFromListProductDocument")
+  static List<Product> toListProducFromListProductDocument(List<ProductDocument> productsD) {
+    return productsD.stream()
+        .map(
+            product ->
+                new Product(
+                    UUID.fromString(product.getId()),
+                    product.getName(),
+                    product.getDescription(),
+                    product.getValue(),
+                    product.getCategory(),
+                    product.getImageUrl()))
+        .toList();
+  }
 }

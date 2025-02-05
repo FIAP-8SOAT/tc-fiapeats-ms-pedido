@@ -3,6 +3,7 @@ package br.com.fiap.fiapeats.adapter.exception;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.ErrorResponse;
 import br.com.fiap.fiapeats.core.exceptions.ClientNotFoundException;
 import br.com.fiap.fiapeats.core.exceptions.FillOrderPropertiesException;
+import br.com.fiap.fiapeats.core.exceptions.OrderNotFoundException;
 import br.com.fiap.fiapeats.core.exceptions.ProductNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,16 @@ public class GlobalExceptionHandling {
     return ErrorResponse.builder()
         .errorCode(HttpStatus.UNPROCESSABLE_ENTITY.value())
         .errorName(HttpStatus.UNPROCESSABLE_ENTITY.name())
+        .message(ex.getMessage())
+        .build();
+  }
+
+  @ExceptionHandler(OrderNotFoundException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ErrorResponse handleOrderNotFoundException(OrderNotFoundException ex) {
+    return ErrorResponse.builder()
+        .errorCode(HttpStatus.NOT_FOUND.value())
+        .errorName(HttpStatus.NOT_FOUND.name())
         .message(ex.getMessage())
         .build();
   }

@@ -6,12 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(
-    name = "FindClient",
-    url = "${feign.client.url}")
+@FeignClient(name = "FindClient", url = "${feign.client.url}")
 public interface FeignFindClient {
 
   @GetMapping("/cliente/{document}")
-  FeignClientResponse getClient(@PathVariable("document") String document,
-                                @RequestHeader("correlationId") String correlationId);
+  FeignClientResponse getClient(
+      @PathVariable("document") String document,
+      @RequestHeader("correlationId") String correlationId);
 }

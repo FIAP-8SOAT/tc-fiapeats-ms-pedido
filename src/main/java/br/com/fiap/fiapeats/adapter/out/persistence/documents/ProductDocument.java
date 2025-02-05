@@ -1,7 +1,6 @@
 package br.com.fiap.fiapeats.adapter.out.persistence.documents;
 
 import br.com.fiap.fiapeats.core.domain.Category;
-import br.com.fiap.fiapeats.core.domain.Product;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
@@ -19,6 +18,4 @@ public class ProductDocument implements Serializable {
   private BigDecimal value;
   private Category category;
   private String imageUrl;
-
-  public ProductDocument(Product product) {}
 }

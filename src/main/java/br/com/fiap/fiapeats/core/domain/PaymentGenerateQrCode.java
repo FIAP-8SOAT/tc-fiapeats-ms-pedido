@@ -1,10 +1,10 @@
 package br.com.fiap.fiapeats.core.domain;
 
-public class Payment {
+public class PaymentGenerateQrCode {
   private String orderId;
   private String notificationUrl;
 
-  public Payment(String orderId, String notificationUrl) {
+  public PaymentGenerateQrCode(String orderId, String notificationUrl) {
     this.orderId = orderId;
     this.notificationUrl = notificationUrl;
   }

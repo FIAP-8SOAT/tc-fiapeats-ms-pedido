@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name = "FeignCreatePayment", url = "${feign.client.url}")
 public interface FeignCreatePayment {
   @PostMapping("/pagamento")
-  FeignCreatePaymentResponse createPayment(@RequestBody FeignCreatePaymentRequest request,
-                                           @RequestHeader("correlationId") String correlationId);
+  FeignCreatePaymentResponse createPayment(
+      @RequestBody FeignCreatePaymentRequest request,
+      @RequestHeader("correlationId") String correlationId);
 }

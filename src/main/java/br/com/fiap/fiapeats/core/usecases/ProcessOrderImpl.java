@@ -10,16 +10,15 @@ import br.com.fiap.fiapeats.core.ports.out.FeignFindClientPort;
 import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
 import br.com.fiap.fiapeats.core.ports.out.SaveOrderPort;
 import br.com.fiap.fiapeats.core.utils.Constants;
-import org.apache.logging.log4j.ThreadContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.apache.logging.log4j.ThreadContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProcessOrderImpl implements ProcessOrderPort {
 
@@ -34,10 +33,10 @@ public class ProcessOrderImpl implements ProcessOrderPort {
   private static final Logger log = LoggerFactory.getLogger(ProcessOrderImpl.class);
 
   public ProcessOrderImpl(
-          FeignFindProductsPort feignFindProductsPort,
-          SaveOrderPort saveOrderPort,
-          FeignFindClientPort feignFindClientPort,
-          FeignCreatePaymentPort feignCreatePaymentPort) {
+      FeignFindProductsPort feignFindProductsPort,
+      SaveOrderPort saveOrderPort,
+      FeignFindClientPort feignFindClientPort,
+      FeignCreatePaymentPort feignCreatePaymentPort) {
     this.feignFindProductsPort = feignFindProductsPort;
     this.saveOrderPort = saveOrderPort;
     this.feignFindClientPort = feignFindClientPort;
@@ -48,9 +47,10 @@ public class ProcessOrderImpl implements ProcessOrderPort {
   public Order process(Order order)
       throws FillOrderPropertiesException, ClientNotFoundException, ProductNotFoundException {
     order.setId(UUID.randomUUID());
-    log.info("[ProcessOrderImpl.process] correlationId{{}} orderId{{}}",
-            ThreadContext.get(Constants.CORRELATION_ID),
-            order.getId());
+    log.info(
+        "[ProcessOrderImpl.process] correlationId{{}} orderId{{}}",
+        ThreadContext.get(Constants.CORRELATION_ID),
+        order.getId());
 
     List<Product> feignProducts = feignFindProductsPort.getAllProducts();
     validPorductItens(feignProducts, order);
@@ -59,12 +59,14 @@ public class ProcessOrderImpl implements ProcessOrderPort {
 
     order.setQrCode(
         feignCreatePaymentPort.createPayment(
-            new Payment("cb2614b9-171c-4792-83d3-9fcdeef4e9ee", "https://teste.com.br")));
+            new PaymentGenerateQrCode(
+                "cb2614b9-171c-4792-83d3-9fcdeef4e9ee", "https://teste.com.br")));
 
     saveOrderPort.save(fillOrderProperties(order, feignProducts));
-    log.info("[ProcessOrderImpl.process] correlationId{{}} {}",
-            ThreadContext.get(Constants.CORRELATION_ID),
-            order);
+    log.info(
+        "[ProcessOrderImpl.process] correlationId{{}} {}",
+        ThreadContext.get(Constants.CORRELATION_ID),
+        order);
     return order;
   }
 
@@ -92,6 +94,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
       throws FillOrderPropertiesException {
     order.setOrderStatus(Constants.PENDING);
     order.setPaymentStatus(Constants.PENDING);
+    order.setPaymentId(1L);
     order.setCreateTimestamp(LocalDateTime.now());
     order.setTimeWaiting(10);
     Map<UUID, Product> mapProduct = new HashMap<>();

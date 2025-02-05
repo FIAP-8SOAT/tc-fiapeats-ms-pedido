@@ -3,7 +3,7 @@ package br.com.fiap.fiapeats.adapter.impl;
 import br.com.fiap.fiapeats.adapter.mapper.FeignPaymentMapper;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignCreatePayment;
 import br.com.fiap.fiapeats.adapter.out.feign.contracts.response.FeignCreatePaymentResponse;
-import br.com.fiap.fiapeats.core.domain.Payment;
+import br.com.fiap.fiapeats.core.domain.PaymentGenerateQrCode;
 import br.com.fiap.fiapeats.core.ports.out.FeignCreatePaymentPort;
 import br.com.fiap.fiapeats.core.utils.Constants;
 import org.apache.logging.log4j.ThreadContext;
@@ -20,10 +20,12 @@ public class FeignCreatePaymentPortImpl implements FeignCreatePaymentPort {
   }
 
   @Override
-  public String createPayment(Payment payment) {
+  public String createPayment(PaymentGenerateQrCode paymentGenerateQrCode) {
     FeignCreatePaymentResponse response =
         feignCreatePayment.createPayment(
-            feignPaymentMapper.toFeignPaymentRequestFromPayment(payment), ThreadContext.get(Constants.CORRELATION_ID));
+            feignPaymentMapper.toFeignPaymentRequestFromPaymentGenerateQrCode(
+                paymentGenerateQrCode),
+            ThreadContext.get(Constants.CORRELATION_ID));
     return response.getQrCode();
   }
 }

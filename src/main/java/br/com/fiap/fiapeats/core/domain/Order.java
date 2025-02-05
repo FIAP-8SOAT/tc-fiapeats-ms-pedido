@@ -14,6 +14,7 @@ public class Order {
   private String qrCode;
   private String orderStatus;
   private String paymentStatus;
+  private Long paymentId;
   private LocalDateTime createTimestamp;
   private int timeWaiting;
 
@@ -24,6 +25,7 @@ public class Order {
       BigDecimal value,
       String orderStatus,
       String paymentStatus,
+      Long paymentId,
       LocalDateTime createTimestamp,
       int timeWaiting,
       String qrCode) {
@@ -33,6 +35,7 @@ public class Order {
     this.value = value;
     this.orderStatus = orderStatus;
     this.paymentStatus = paymentStatus;
+    this.paymentId = paymentId;
     this.createTimestamp = createTimestamp;
     this.timeWaiting = timeWaiting;
     this.qrCode = qrCode;
@@ -112,17 +115,39 @@ public class Order {
 
   @Override
   public String toString() {
-    return "Order{" +
-            "id=" + id +
-            ", products=" + (products != null ? products.toString() : "[]") +
-            ", taxId='" + taxId + '\'' +
-            ", value=" + value +
-            ", qrCode='" + qrCode + '\'' +
-            ", orderStatus='" + orderStatus + '\'' +
-            ", paymentStatus='" + paymentStatus + '\'' +
-            ", createTimestamp=" + createTimestamp +
-            ", timeWaiting=" + timeWaiting +
-            '}';
+    return "Order{"
+        + "id="
+        + id
+        + ", products="
+        + (products != null ? products.toString() : "[]")
+        + ", taxId='"
+        + taxId
+        + '\''
+        + ", value="
+        + value
+        + ", qrCode='"
+        + qrCode
+        + '\''
+        + ", orderStatus='"
+        + orderStatus
+        + '\''
+        + ", paymentStatus='"
+        + paymentStatus
+        + '\''
+        + ", paymentId='"
+        + paymentId
+        + ", createTimestamp="
+        + createTimestamp
+        + ", timeWaiting="
+        + timeWaiting
+        + '}';
   }
 
+  public Long getPaymentId() {
+    return paymentId;
+  }
+
+  public void setPaymentId(Long paymentId) {
+    this.paymentId = paymentId;
+  }
 }

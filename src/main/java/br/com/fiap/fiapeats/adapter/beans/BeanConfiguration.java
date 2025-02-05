@@ -4,14 +4,14 @@ import br.com.fiap.fiapeats.adapter.impl.FeignCreatePaymentPortImpl;
 import br.com.fiap.fiapeats.adapter.impl.FeignFindClientPortImpl;
 import br.com.fiap.fiapeats.adapter.mapper.FeignClientMapper;
 import br.com.fiap.fiapeats.adapter.mapper.FeignPaymentMapper;
+import br.com.fiap.fiapeats.adapter.mapper.OrderMapper;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignCreatePayment;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignFindClient;
 import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
-import br.com.fiap.fiapeats.core.ports.out.FeignCreatePaymentPort;
-import br.com.fiap.fiapeats.core.ports.out.FeignFindClientPort;
-import br.com.fiap.fiapeats.core.ports.out.FeignFindProductsPort;
-import br.com.fiap.fiapeats.core.ports.out.SaveOrderPort;
+import br.com.fiap.fiapeats.core.ports.in.ProcessPaymentPort;
+import br.com.fiap.fiapeats.core.ports.out.*;
 import br.com.fiap.fiapeats.core.usecases.ProcessOrderImpl;
+import br.com.fiap.fiapeats.core.usecases.ProcessPaymentImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,5 +38,11 @@ public class BeanConfiguration {
   public FeignCreatePaymentPort feignCreatePaymentPort(
       FeignCreatePayment feignCreatePayment, FeignPaymentMapper feignPaymentMapper) {
     return new FeignCreatePaymentPortImpl(feignCreatePayment, feignPaymentMapper);
+  }
+
+  @Bean
+  public ProcessPaymentPort processPaymentPort(
+      PaymentUpdatePort paymentUpdatePort, OrderMapper orderMapper) {
+    return new ProcessPaymentImpl(paymentUpdatePort, orderMapper);
   }
 }
