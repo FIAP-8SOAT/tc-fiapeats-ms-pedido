@@ -8,8 +8,13 @@ spring:
     name: tc-fiapeats-ms-pedido
   data:
     mongodb:
-      uri: mongodb://admin:pass@localhost:27017/admin
-      database: admin
+      host: ${DATASOURCE_HOST}
+      port: ${DATASOURCE_PORT}
+      database: ${DATASOURCE}
+      username: ${DATASOURCE_USERNAME}
+      password: ${DATASOURCE_PASSWORD}
+      authentication-database: ${DATASOURCE_AUTH}
+
 
 logging:
   level:
@@ -17,11 +22,9 @@ logging:
     feign.client: DEBUG
     org.springframework.cloud.openfeign: DEBUG
 
-
-
 feign:
   client:
-    url: http://localhost:8080/fiapeats
+    url: ${FEIGN_BASE_URL}
 
 
 
