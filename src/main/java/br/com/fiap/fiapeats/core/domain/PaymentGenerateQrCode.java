@@ -24,4 +24,16 @@ public class PaymentGenerateQrCode {
   public void setNotificationUrl(String notificationUrl) {
     this.notificationUrl = notificationUrl;
   }
+
+  @Override
+  public String toString() {
+    return "PaymentGenerateQrCode{"
+        + "orderId='"
+        + orderId
+        + '\''
+        + ", notificationUrl='"
+        + notificationUrl
+        + '\''
+        + '}';
+  }
 }

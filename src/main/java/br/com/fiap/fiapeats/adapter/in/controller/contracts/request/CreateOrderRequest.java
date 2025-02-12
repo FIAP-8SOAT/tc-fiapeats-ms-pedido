@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class OrderRequest {
+public class CreateOrderRequest {
   @Size(min = 1, message = "a lista deve conter pelo menos 1 produto")
   @ArraySchema(
       arraySchema =

@@ -7,7 +7,6 @@ import br.com.fiap.fiapeats.core.domain.PaymentUpdateStatus;
 import br.com.fiap.fiapeats.core.exceptions.OrderNotFoundException;
 import br.com.fiap.fiapeats.core.ports.in.ProcessPaymentPort;
 import br.com.fiap.fiapeats.core.ports.out.PaymentUpdatePort;
-
 import java.util.Optional;
 
 public class ProcessPaymentImpl implements ProcessPaymentPort {
@@ -23,16 +22,17 @@ public class ProcessPaymentImpl implements ProcessPaymentPort {
 
   @Override
   public void updatePayment(PaymentUpdateStatus paymentUpdateStatus) {
-    Optional<OrderDocument> optionalOrder = paymentUpdatePort.getOrder(paymentUpdateStatus.getOrderId());
+    Optional<OrderDocument> optionalOrder =
+        paymentUpdatePort.getOrder(paymentUpdateStatus.getOrderId());
 
     if (optionalOrder.isPresent()) {
       Order newDoc = orderMapper.toOrderFromOrderDocument(optionalOrder.get());
       newDoc.setPaymentId(paymentUpdateStatus.getPaymentId());
       newDoc.setPaymentStatus(paymentUpdateStatus.getPaymentStatus());
       paymentUpdatePort.update(orderMapper.toOrderDocumentFromOrder(newDoc));
-    }else {
-      throw new OrderNotFoundException(String.format(
-              "Ordem %s não existe na base", paymentUpdateStatus.getOrderId()));
+    } else {
+      throw new OrderNotFoundException(
+          String.format("Ordem %s não existe na base", paymentUpdateStatus.getOrderId()));
     }
   }
 }

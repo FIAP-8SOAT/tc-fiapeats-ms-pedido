@@ -1,9 +1,8 @@
 package br.com.fiap.fiapeats.adapter.out.persistence.documents;
 
+import java.io.Serializable;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.io.Serializable;
 
 @Document(collection = "payment")
 @Data

@@ -21,6 +21,12 @@ logging:
     feign: DEBUG
     feign.client: DEBUG
     org.springframework.cloud.openfeign: DEBUG
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
 
 feign:
   client:

@@ -1,7 +1,8 @@
 package br.com.fiap.fiapeats.adapter.mapper;
 
-import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.OrderRequest;
+import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.CreateOrderRequest;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CreateOrderResponse;
+import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.OrderResponse;
 import br.com.fiap.fiapeats.adapter.out.persistence.documents.OrderDocument;
 import br.com.fiap.fiapeats.adapter.out.persistence.documents.ProductDocument;
 import br.com.fiap.fiapeats.core.domain.Order;
@@ -23,7 +24,7 @@ public interface OrderMapper {
   @Mapping(target = "paymentStatus", ignore = true)
   @Mapping(target = "paymentId", ignore = true)
   @Mapping(target = "products", source = "idProducts", qualifiedByName = "mapIdsToProducts")
-  Order toOrderFromOrderRequest(OrderRequest orderRequest);
+  Order toOrderFromOrderRequest(CreateOrderRequest createOrderRequest);
 
   @Named("mapIdsToProducts")
   static List<Product> mapIdsToProducts(List<UUID> ids) {
@@ -57,7 +58,7 @@ public interface OrderMapper {
   @Mapping(target = "qrCode", source = "qrCode")
   @Mapping(target = "orderId", source = "id")
   @Mapping(target = "status", source = "orderStatus")
-  CreateOrderResponse toOrderResponseFromOrder(Order order);
+  CreateOrderResponse toCreateOrderResponseFromOrder(Order order);
 
   @Mapping(
       target = "products",
@@ -82,4 +83,6 @@ public interface OrderMapper {
                     product.getImageUrl()))
         .toList();
   }
+
+  OrderResponse toOrderResponseFromOrder(Order order);
 }

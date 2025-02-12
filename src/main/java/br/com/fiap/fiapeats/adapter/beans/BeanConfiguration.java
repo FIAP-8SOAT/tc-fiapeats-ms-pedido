@@ -7,9 +7,11 @@ import br.com.fiap.fiapeats.adapter.mapper.FeignPaymentMapper;
 import br.com.fiap.fiapeats.adapter.mapper.OrderMapper;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignCreatePayment;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignFindClient;
+import br.com.fiap.fiapeats.core.ports.in.GetOrderPort;
 import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
 import br.com.fiap.fiapeats.core.ports.in.ProcessPaymentPort;
 import br.com.fiap.fiapeats.core.ports.out.*;
+import br.com.fiap.fiapeats.core.usecases.GetOrderImpl;
 import br.com.fiap.fiapeats.core.usecases.ProcessOrderImpl;
 import br.com.fiap.fiapeats.core.usecases.ProcessPaymentImpl;
 import org.springframework.context.annotation.Bean;
@@ -44,5 +46,13 @@ public class BeanConfiguration {
   public ProcessPaymentPort processPaymentPort(
       PaymentUpdatePort paymentUpdatePort, OrderMapper orderMapper) {
     return new ProcessPaymentImpl(paymentUpdatePort, orderMapper);
+  }
+
+  @Bean
+  public GetOrderPort getOrderPort(
+      GetSingleOrderPort getSingleOrderPort,
+      GetListOrderPort getListOrderPort,
+      OrderMapper orderMapper) {
+    return new GetOrderImpl(getSingleOrderPort, getListOrderPort, orderMapper);
   }
 }

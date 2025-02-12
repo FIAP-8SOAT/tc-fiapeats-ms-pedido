@@ -36,4 +36,18 @@ public class PaymentUpdateStatus {
   public void setOrderId(String orderId) {
     this.orderId = orderId;
   }
+
+  @Override
+  public String toString() {
+    return "PaymentUpdateStatus{"
+        + "orderId='"
+        + orderId
+        + '\''
+        + ", paymentId="
+        + paymentId
+        + ", paymentStatus='"
+        + paymentStatus
+        + '\''
+        + '}';
+  }
 }
