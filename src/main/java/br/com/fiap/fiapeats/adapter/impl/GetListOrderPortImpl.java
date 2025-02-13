@@ -3,7 +3,6 @@ package br.com.fiap.fiapeats.adapter.impl;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.GetOrderHeaderRequest;
 import br.com.fiap.fiapeats.adapter.mapper.OrderMapper;
 import br.com.fiap.fiapeats.adapter.out.persistence.documents.OrderDocument;
-import br.com.fiap.fiapeats.adapter.out.persistence.repository.OrderRepository;
 import br.com.fiap.fiapeats.core.ports.out.GetListOrderPort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -18,8 +17,8 @@ public class GetListOrderPortImpl implements GetListOrderPort {
   private final OrderMapper orderMapper;
 
   public GetListOrderPortImpl(MongoTemplate mongoTemplate, OrderMapper orderMapper) {
-      this.mongoTemplate = mongoTemplate;
-      this.orderMapper = orderMapper;
+    this.mongoTemplate = mongoTemplate;
+    this.orderMapper = orderMapper;
   }
 
   @Override
@@ -34,7 +33,8 @@ public class GetListOrderPortImpl implements GetListOrderPort {
       criteria.orOperator(Criteria.where("products.name").regex(request.getProdutoNome(), "i"));
     }
     if (request.getProdutoDescricao() != null) {
-      criteria.orOperator(Criteria.where("products.description").regex(request.getProdutoDescricao(), "i"));
+      criteria.orOperator(
+          Criteria.where("products.description").regex(request.getProdutoDescricao(), "i"));
     }
     if (request.getProdutoValor() != null) {
       criteria.orOperator(Criteria.where("products.value").is(request.getProdutoValor()));
@@ -43,7 +43,9 @@ public class GetListOrderPortImpl implements GetListOrderPort {
       criteria.orOperator(Criteria.where("products.category._id").is(request.getCategoriaId()));
     }
     if (request.getCategoriaDescricao() != null) {
-      criteria.orOperator(Criteria.where("products.category.description").regex(request.getCategoriaDescricao(), "i"));
+      criteria.orOperator(
+          Criteria.where("products.category.description")
+              .regex(request.getCategoriaDescricao(), "i"));
     }
     if (request.getCpf() != null) {
       criteria.orOperator(Criteria.where("taxId").is(request.getCpf()));

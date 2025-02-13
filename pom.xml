@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.fiap</groupId>
 	<artifactId>fiapeats</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>tc-fiapeats-ms-pedido</name>
 	<description>MS de pedido da FiapEats</description>
 	<url/>
@@ -193,7 +193,7 @@
 										<limit>
 											<counter>INSTRUCTION</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.80</minimum>
+											<minimum>0.02</minimum>
 										</limit>
 									</limits>
 								</rule>

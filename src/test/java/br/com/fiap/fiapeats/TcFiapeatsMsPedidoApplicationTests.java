@@ -13,7 +13,10 @@ import org.springframework.test.context.TestPropertySource;
       "DATASOURCE_PORT=27017",
       "DATASOURCE=localhost",
       "DATASOURCE_AUTH=admin",
-      "FEIGN_BASE_URL=http://localhost:8080/fiapeats"
+      "FEIGN_BASE_URL=http://localhost:8080/fiapeats",
+      "FEIGN_BASE_URL_MS_CLIENTE=http://localhost:8083/fiapeats",
+      "FEIGN_BASE_URL_MS_PRODUTO=http://localhost:8081/fiapeats",
+      "FEIGN_BASE_URL_MS_PAGAMENTO=http://localhost:8082/fiapeats"
     })
 class TcFiapeatsMsPedidoApplicationTests {
 
