@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /fiapeats
+    context-path: /mspedido
 
 spring:
   application:
@@ -34,6 +34,16 @@ feign:
     ms-cliente: ${FEIGN_BASE_URL_MS_CLIENTE}
     ms-produto: ${FEIGN_BASE_URL_MS_PRODUTO}
     ms-pagamento: ${FEIGN_BASE_URL_MS_PAGAMENTO}
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
 
 
 

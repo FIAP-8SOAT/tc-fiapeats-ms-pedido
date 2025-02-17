@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeignFindProductsResponse {
-  private UUID id;
+  private String id;
 
   @JsonProperty("nome")
   private String name;
@@ -25,7 +25,7 @@ public class FeignFindProductsResponse {
   private BigDecimal value;
 
   @JsonProperty("categoria")
-  private String category;
+  private FeignFindProductsCategoryResponse category;
 
   @JsonProperty("imagemUrl")
   private String imageUrl;

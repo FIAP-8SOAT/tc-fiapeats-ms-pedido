@@ -4,7 +4,7 @@ import br.com.fiap.fiapeats.adapter.in.controller.contracts.request.GetOrderHead
 import br.com.fiap.fiapeats.core.domain.Order;
 
 public interface GetOrderPort {
-  public Order getOrderById(String orderId);
+  Order getOrderById(String orderId);
 
-  public void getOrderByParameters(GetOrderHeaderRequest request);
+  Order getOrderByParameters(GetOrderHeaderRequest request);
 }

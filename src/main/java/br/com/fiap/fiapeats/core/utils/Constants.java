@@ -11,4 +11,5 @@ public class Constants {
   public static final String TXT_PRODUCT_NOT_FOUND =
       "Existem produtos na lista que não estão na base";
   public static final String TXT_CLIENT_NOT_FOUND = "O cliente informado não consta cadastro";
+  public static final String TXT_FEIGN_REQUEST_ERROR = "Erro ao realizar request!";
 }

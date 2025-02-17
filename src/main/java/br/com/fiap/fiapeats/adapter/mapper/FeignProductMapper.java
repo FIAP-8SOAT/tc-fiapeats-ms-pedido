@@ -11,16 +11,8 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface FeignProductMapper {
 
-  @Mapping(source = "category", target = "category", qualifiedByName = "mapCategory")
   Product toProductFromFeignProduct(FeignFindProductsResponse response);
 
-  @Named("mapCategory")
-  static Category mapCategory(String categoryName) {
-    if (categoryName == null) {
-      return null;
-    }
-    return new Category(null, categoryName);
-  }
 
   List<Product> toProductListFromFeignProductList(List<FeignFindProductsResponse> responses);
 }

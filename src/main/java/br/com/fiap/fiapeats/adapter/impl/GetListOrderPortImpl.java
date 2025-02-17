@@ -22,7 +22,7 @@ public class GetListOrderPortImpl implements GetListOrderPort {
   }
 
   @Override
-  public void getOrderByHeaders(GetOrderHeaderRequest request) {
+  public OrderDocument getOrderByHeaders(GetOrderHeaderRequest request) {
     Query query = new Query();
     Criteria criteria = new Criteria();
 
@@ -73,6 +73,6 @@ public class GetListOrderPortImpl implements GetListOrderPort {
       query.addCriteria(criteria);
     }
 
-    mongoTemplate.findOne(query, OrderDocument.class);
+    return mongoTemplate.findOne(query, OrderDocument.class);
   }
 }

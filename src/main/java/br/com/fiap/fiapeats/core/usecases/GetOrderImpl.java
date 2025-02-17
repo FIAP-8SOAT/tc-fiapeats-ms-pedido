@@ -33,7 +33,7 @@ public class GetOrderImpl implements GetOrderPort {
   }
 
   @Override
-  public void getOrderByParameters(GetOrderHeaderRequest request) {
-    getListOrderPort.getOrderByHeaders(request);
+  public Order getOrderByParameters(GetOrderHeaderRequest request) {
+    return orderMapper.toOrderFromOrderDocument(getListOrderPort.getOrderByHeaders(request));
   }
 }

@@ -81,7 +81,6 @@ public class OrderController {
         "correlationId={{}} Solicitacao recebida [getOrderByHeaders] ",
         ThreadContext.get(Constants.CORRELATION_ID));
     log.info(headers.toString());
-    getOrderPort.getOrderByParameters(headers);
-    return List.of(ResponseEntity.ok(OrderResponse.builder().build()));
+    return List.of(ResponseEntity.ok(orderMapper.toOrderResponseFromOrder(getOrderPort.getOrderByParameters(headers))));
   }
 }

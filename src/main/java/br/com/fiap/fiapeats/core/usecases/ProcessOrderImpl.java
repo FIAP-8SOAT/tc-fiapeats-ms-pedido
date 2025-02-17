@@ -2,6 +2,7 @@ package br.com.fiap.fiapeats.core.usecases;
 
 import br.com.fiap.fiapeats.core.domain.*;
 import br.com.fiap.fiapeats.core.exceptions.ClientNotFoundException;
+import br.com.fiap.fiapeats.core.exceptions.FeignRequestException;
 import br.com.fiap.fiapeats.core.exceptions.FillOrderPropertiesException;
 import br.com.fiap.fiapeats.core.exceptions.ProductNotFoundException;
 import br.com.fiap.fiapeats.core.ports.in.ProcessOrderPort;
@@ -63,10 +64,6 @@ public class ProcessOrderImpl implements ProcessOrderPort {
                 "cb2614b9-171c-4792-83d3-9fcdeef4e9ee", "https://teste.com.br")));
 
     saveOrderPort.save(fillOrderProperties(order, feignProducts));
-    log.info(
-        "[ProcessOrderImpl.process] correlationId{{}} {}",
-        ThreadContext.get(Constants.CORRELATION_ID),
-        order);
     return order;
   }
 
@@ -86,7 +83,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
     try {
       feignFindClientPort.findClient(order.getTaxId());
     } catch (Exception e) {
-      throw new ClientNotFoundException(Constants.TXT_CLIENT_NOT_FOUND);
+      throw new FeignRequestException(e.getLocalizedMessage());
     }
   }
 
@@ -120,6 +117,10 @@ public class ProcessOrderImpl implements ProcessOrderPort {
         throw new FillOrderPropertiesException(e.getMessage());
       }
     }
+    log.info(
+            "[ProcessOrderImpl.process.fillOrderProperties] correlationId{{}} {}",
+            ThreadContext.get(Constants.CORRELATION_ID),
+            order);
     return order;
   }
 }
