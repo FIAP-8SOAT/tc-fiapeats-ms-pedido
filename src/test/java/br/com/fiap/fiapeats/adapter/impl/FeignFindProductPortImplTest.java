@@ -2,6 +2,7 @@ package br.com.fiap.fiapeats.adapter.impl;
 
 import br.com.fiap.fiapeats.adapter.mapper.FeignProductMapper;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignFindProducts;
+import br.com.fiap.fiapeats.adapter.out.feign.contracts.response.FeignFindProductsCategoryResponse;
 import br.com.fiap.fiapeats.adapter.out.feign.contracts.response.FeignFindProductsResponse;
 import br.com.fiap.fiapeats.core.domain.Category;
 import br.com.fiap.fiapeats.core.domain.Product;
@@ -34,7 +35,7 @@ public class FeignFindProductPortImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         product = new Product(UUID.randomUUID(), "Produto", "Produto Teste", BigDecimal.TEN, new Category(1L, "Bebida"), null);
-        feignFindProductsResponse = new FeignFindProductsResponse(UUID.randomUUID(), "Produto", "Produto Teste", BigDecimal.TEN, "Bebida", null);
+        feignFindProductsResponse = new FeignFindProductsResponse(UUID.randomUUID().toString(), "Produto", "Produto Teste", BigDecimal.TEN, FeignFindProductsCategoryResponse.builder().id(UUID.randomUUID().toString()).description("Bebida").build(), null);
     }
 
     @Test

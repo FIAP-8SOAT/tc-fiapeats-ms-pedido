@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "FeignCreatePayment", url = "${feign.client.url}")
+@FeignClient(name = "FeignCreatePayment", url = "${feign.client.ms-pagamento}")
 public interface FeignCreatePayment {
   @PostMapping("/pagamento")
   FeignCreatePaymentResponse createPayment(

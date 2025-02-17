@@ -61,7 +61,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
     order.setQrCode(
         feignCreatePaymentPort.createPayment(
             new PaymentGenerateQrCode(
-                "cb2614b9-171c-4792-83d3-9fcdeef4e9ee", "https://teste.com.br")));
+                order.getId().toString(), null)));
 
     saveOrderPort.save(fillOrderProperties(order, feignProducts));
     return order;
