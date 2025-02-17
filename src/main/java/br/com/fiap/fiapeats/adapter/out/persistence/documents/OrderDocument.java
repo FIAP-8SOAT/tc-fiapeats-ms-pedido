@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
+
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "orders")
 @Data
+@Builder
 public class OrderDocument implements Serializable {
 
   @Id private String id;
@@ -24,4 +28,5 @@ public class OrderDocument implements Serializable {
   private PaymentDocument payment;
   private LocalDateTime createTimestamp;
   private int timeWaiting;
+
 }
