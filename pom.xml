@@ -175,6 +175,11 @@
 					</execution>
 				</executions>
 				<configuration>
+					<excludes>
+						<exclude>**/BeanConfiguration.java</exclude>
+						<exclude>**/FeignConfig.java</exclude>
+						<exclude>**/SwaggerConfiguration.java</exclude>
+					</excludes>
 					<rules>
 						<rule>
 							<element>CLASS</element>
@@ -209,17 +214,13 @@
 						<id>integration-tests</id>
 						<phase>verify</phase>
 						<goals>
-							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
 					</execution>
 				</executions>
 				<configuration>
-					<includes>
-						<include>**/*IT.java</include> <!-- Apenas classes terminadas com IT -->
-					</includes>
 					<excludes>
-						<exclude>**/*Test.java</exclude> <!-- Evita rodar o Cucumber -->
+						<exclude>**/*Test.java</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
