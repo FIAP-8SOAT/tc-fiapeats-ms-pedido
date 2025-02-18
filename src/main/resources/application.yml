@@ -1,0 +1,50 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /mspedido
+
+spring:
+  application:
+    name: tc-fiapeats-ms-pedido
+  data:
+    mongodb:
+      host: ${DATASOURCE_HOST}
+      port: ${DATASOURCE_PORT}
+      database: ${DATASOURCE}
+      username: ${DATASOURCE_USERNAME}
+      password: ${DATASOURCE_PASSWORD}
+      authentication-database: ${DATASOURCE_AUTH}
+
+
+logging:
+  level:
+    feign: DEBUG
+    feign.client: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
+feign:
+  client:
+    url: ${FEIGN_BASE_URL}
+    ms-cliente: ${FEIGN_BASE_URL_MS_CLIENTE}
+    ms-produto: ${FEIGN_BASE_URL_MS_PRODUTO}
+    ms-pagamento: ${FEIGN_BASE_URL_MS_PAGAMENTO}
+
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+
+
+
