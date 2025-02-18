@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -14,6 +16,6 @@ public class FeignCreatePaymentRequest {
   @JsonProperty("idPedido")
   private String orderId;
 
-  @JsonProperty("urlNotificacao")
-  private String notificationUrl;
+  @JsonProperty("produtos")
+  private List<FeignProducItemPaymentRequest> products;
 }

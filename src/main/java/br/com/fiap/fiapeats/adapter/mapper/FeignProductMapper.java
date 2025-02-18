@@ -1,5 +1,6 @@
 package br.com.fiap.fiapeats.adapter.mapper;
 
+import br.com.fiap.fiapeats.adapter.out.feign.contracts.request.FeignProducItemPaymentRequest;
 import br.com.fiap.fiapeats.adapter.out.feign.contracts.response.FeignFindProductsResponse;
 import br.com.fiap.fiapeats.core.domain.Category;
 import br.com.fiap.fiapeats.core.domain.Product;
