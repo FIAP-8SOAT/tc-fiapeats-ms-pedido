@@ -1,12 +1,14 @@
 package br.com.fiap.fiapeats.core.domain;
 
+import java.util.List;
+
 public class PaymentGenerateQrCode {
   private String orderId;
-  private String notificationUrl;
+  private List<Product> products;
 
-  public PaymentGenerateQrCode(String orderId, String notificationUrl) {
+  public PaymentGenerateQrCode(String orderId, List<Product> products) {
     this.orderId = orderId;
-    this.notificationUrl = notificationUrl;
+    this.products = products;
   }
 
   public String getOrderId() {
@@ -17,23 +19,11 @@ public class PaymentGenerateQrCode {
     this.orderId = orderId;
   }
 
-  public String getNotificationUrl() {
-    return notificationUrl;
+  public List<Product> getProducts() {
+    return products;
   }
 
-  public void setNotificationUrl(String notificationUrl) {
-    this.notificationUrl = notificationUrl;
-  }
-
-  @Override
-  public String toString() {
-    return "PaymentGenerateQrCode{"
-        + "orderId='"
-        + orderId
-        + '\''
-        + ", notificationUrl='"
-        + notificationUrl
-        + '\''
-        + '}';
+  public void setProducts(List<Product> products) {
+    this.products = products;
   }
 }

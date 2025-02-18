@@ -6,6 +6,7 @@ import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.*;
 import br.com.fiap.fiapeats.adapter.mapper.FeignPaymentMapper;
 import br.com.fiap.fiapeats.adapter.out.feign.FeignCreatePayment;
 import br.com.fiap.fiapeats.adapter.out.feign.contracts.request.FeignCreatePaymentRequest;
+import br.com.fiap.fiapeats.adapter.out.feign.contracts.request.FeignProducItemPaymentRequest;
 import br.com.fiap.fiapeats.adapter.out.feign.contracts.response.FeignCreatePaymentResponse;
 import br.com.fiap.fiapeats.core.domain.Category;
 import br.com.fiap.fiapeats.core.domain.Order;
@@ -43,8 +44,8 @@ public class FeignCreatePaymentPortImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        paymentGenerateQrCode = new PaymentGenerateQrCode("123456", "http://url_notificacao");
-        feignCreatePaymentRequest = new FeignCreatePaymentRequest("123456", "http://url_notificacao");
+        paymentGenerateQrCode = new PaymentGenerateQrCode("123456", List.of(new Product()));
+        feignCreatePaymentRequest = new FeignCreatePaymentRequest("123456", List.of(new FeignProducItemPaymentRequest()));
         feignCreatePaymentResponse = new FeignCreatePaymentResponse("codigoQR");
     }
 

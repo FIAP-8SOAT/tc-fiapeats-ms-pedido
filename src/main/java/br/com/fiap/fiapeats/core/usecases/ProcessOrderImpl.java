@@ -1,5 +1,7 @@
 package br.com.fiap.fiapeats.core.usecases;
 
+import br.com.fiap.fiapeats.adapter.out.feign.contracts.request.FeignCreatePaymentRequest;
+import br.com.fiap.fiapeats.adapter.out.feign.contracts.request.FeignProducItemPaymentRequest;
 import br.com.fiap.fiapeats.core.domain.*;
 import br.com.fiap.fiapeats.core.exceptions.ClientNotFoundException;
 import br.com.fiap.fiapeats.core.exceptions.FeignRequestException;
@@ -58,12 +60,13 @@ public class ProcessOrderImpl implements ProcessOrderPort {
 
     validClient(order);
 
-    order.setQrCode(
-        feignCreatePaymentPort.createPayment(
-            new PaymentGenerateQrCode(
-                order.getId().toString(), null)));
+    fillOrderProperties(order, feignProducts);
 
-    saveOrderPort.save(fillOrderProperties(order, feignProducts));
+    order.setQrCode(
+        feignCreatePaymentPort.createPayment(new PaymentGenerateQrCode(order.getId().toString(),
+                        order.getProducts())));
+
+    saveOrderPort.save(order);
     return order;
   }
 
@@ -87,7 +90,7 @@ public class ProcessOrderImpl implements ProcessOrderPort {
     }
   }
 
-  private Order fillOrderProperties(Order order, List<Product> feignProducts)
+  private void fillOrderProperties(Order order, List<Product> feignProducts)
       throws FillOrderPropertiesException {
     order.setOrderStatus(Constants.PENDING);
     order.setPaymentStatus(Constants.PENDING);
@@ -121,6 +124,5 @@ public class ProcessOrderImpl implements ProcessOrderPort {
             "[ProcessOrderImpl.process.fillOrderProperties] correlationId{{}} {}",
             ThreadContext.get(Constants.CORRELATION_ID),
             order);
-    return order;
   }
 }
