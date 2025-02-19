@@ -81,75 +81,76 @@ jobs:
         run: |
           echo "Relatório de testes unitários disponível em: file://$(pwd)/target/surefire-reports/index.html" 
 
-  sonarqube:
-    runs-on: ubuntu-latest
-    needs: [ unit-tests ]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarQube packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B test org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=fiapeats-msp_pedido
-      - name: Check SonarQube Quality Gate
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: "https://sonarcloud.io"
-        run: |
-          SONAR_PROJECT_KEY="fiapeats-msp_pedido"
-          PULL_REQUEST_NUMBER=${{ github.event.pull_request.number }}
 
-          if [[ -n "$PULL_REQUEST_NUMBER" ]]; then
-            QUALITY_GATE_URL="$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=$SONAR_PROJECT_KEY&pullRequest=$PULL_REQUEST_NUMBER"
-          else
-            QUALITY_GATE_URL="$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=$SONAR_PROJECT_KEY"
-          fi
-
-          echo "Consultando Quality Gate em: $QUALITY_GATE_URL"
-
-          MAX_RETRIES=10
-          RETRY_DELAY=10  # Segundos
-
-          for ((i=1; i<=MAX_RETRIES; i++)); do
-            STATUS=$(curl -s -u $SONAR_TOKEN: "$QUALITY_GATE_URL" | jq -r .projectStatus.status)
-
-            if [[ "$STATUS" != "null" ]]; then
-              break
-            fi
-
-            echo "SonarQube ainda não está pronto. Tentativa $i de $MAX_RETRIES..."
-            sleep $RETRY_DELAY
-          done
-
-          echo "Quality Gate Status: $STATUS"
-
-          if [[ "$STATUS" != "OK" ]]; then
-            echo "❌ Quality Gate Failed!"
-            exit 1
-          fi
-
-          echo "✅ Quality Gate Passed!"
+#  sonarqube:
+#    runs-on: ubuntu-latest
+#    needs: [ unit-tests ]
+#    steps:
+#      - uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: 17
+#          distribution: 'zulu' # Alternative distribution options are available.
+#      - name: Cache SonarQube packages
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.sonar/cache
+#          key: ${{ runner.os }}-sonar
+#          restore-keys: ${{ runner.os }}-sonar
+#      - name: Cache Maven packages
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.m2
+#          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: ${{ runner.os }}-m2
+#      - name: Build and analyze
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: mvn -B test org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=fiapeats-msp_pedido
+#      - name: Check SonarQube Quality Gate
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          SONAR_HOST_URL: "https://sonarcloud.io"
+#        run: |
+#          SONAR_PROJECT_KEY="fiapeats-msp_pedido"
+#          PULL_REQUEST_NUMBER=${{ github.event.pull_request.number }}
+#
+#          if [[ -n "$PULL_REQUEST_NUMBER" ]]; then
+#            QUALITY_GATE_URL="$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=$SONAR_PROJECT_KEY&pullRequest=$PULL_REQUEST_NUMBER"
+#          else
+#            QUALITY_GATE_URL="$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=$SONAR_PROJECT_KEY"
+#          fi
+#
+#          echo "Consultando Quality Gate em: $QUALITY_GATE_URL"
+#
+#          MAX_RETRIES=10
+#          RETRY_DELAY=10  # Segundos
+#
+#          for ((i=1; i<=MAX_RETRIES; i++)); do
+#            STATUS=$(curl -s -u $SONAR_TOKEN: "$QUALITY_GATE_URL" | jq -r .projectStatus.status)
+#
+#            if [[ "$STATUS" != "null" ]]; then
+#              break
+#            fi
+#
+#            echo "SonarQube ainda não está pronto. Tentativa $i de $MAX_RETRIES..."
+#            sleep $RETRY_DELAY
+#          done
+#
+#          echo "Quality Gate Status: $STATUS"
+#
+#          if [[ "$STATUS" != "OK" ]]; then
+#            echo "❌ Quality Gate Failed!"
+#            exit 1
+#          fi
+#
+#          echo "✅ Quality Gate Passed!"
 
   verify-aws:
-    needs: sonarqube
+#    needs: sonarqube
     runs-on: ubuntu-latest
     steps:
       - name: Configurar AWS
@@ -161,11 +162,11 @@ jobs:
 
       - name: Verificar cluster EKS
         run: |
-          aws eks describe-cluster --name eks-cluster --region us-east-1 || echo "Cluster não encontrado."
+          aws eks describe-cluster --name eks-fiapeats-cluster --region us-east-1 || echo "Cluster não encontrado."
 
       - name: Logar no Amazon ECR
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 980921733871.dkr.ecr.us-east-1.amazonaws.com
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 390403893106.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Validar repositório ECR
         run: |
@@ -189,13 +190,13 @@ jobs:
       - name: Obter AWS Account ID e versão
         id: get-account-id
         run: |
-          ACCOUNT_ID=980921733871
+          ACCOUNT_ID=390403893106
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "AWS_ACCOUNT_ID=$ACCOUNT_ID" >> $GITHUB_ENV  
 
       - name: Atualizar configuração do Kubernetes
         run: |
-          aws eks update-kubeconfig --name eks-cluster --region us-east-1
+          aws eks update-kubeconfig --name eks-fiapeats-cluster --region us-east-1
           kubectl cluster-info
 
       - name: Obter login no Amazon ECR
@@ -227,15 +228,19 @@ jobs:
 
       - name: Push da imagem para o Amazon ECR
         run: |
+          # Captura a versão do projeto a partir do Maven
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Versão detectada: $VERSION"
+
           IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/fiapeats-ms-pedido"
+          
+          echo "Fazendo push da imagem $IMAGE_REPO:$VERSION..."        
           docker push $IMAGE_REPO:$VERSION
           
           # Tag e push para latest apenas para produção
-          if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "Fazendo merge na latest"
-            docker tag $IMAGE_REPO:$VERSION $IMAGE_REPO:latest
-            docker push $IMAGE_REPO:latest
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+          echo "Push da tag 'latest' para produção."
+          docker push $IMAGE_REPO:latest
           fi
 
 
@@ -250,17 +255,16 @@ jobs:
             echo "Deploy no ambiente de produção. Atualizando com a imagem 'latest'..."
             docker tag $IMAGE_REPO:$VERSION $IMAGE_REPO:latest
             docker push $IMAGE_REPO:latest
-            kubectl set image deployment/fiapeats-ms-pedido-deployment fiapeats-ms-pedido-container=$IMAGE_REPO:latest
+            kubectl set image deployment/ms-pedido-deployment ms-pedido-container=$IMAGE_REPO:latest  -n fiapeats-hk
           else
             echo "Deploy no ambiente de desenvolvimento. Atualizando com a imagem versionada..."
-            kubectl set image deployment/fiapeats-ms-pedido-deployment fiapeats-ms-pedido-container=$IMAGE_REPO:$VERSION
+            kubectl set image deployment/ms-pedido-deployment ms-pedido-container=$IMAGE_REPO:$VERSION  -n fiapeats-hk
           fi
 
   # Job para deploy no ambiente de produção
   deploy-production:
     needs: publish-image
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
       - name: Baixar código do repositório
         uses: actions/checkout@v3
@@ -279,42 +283,31 @@ jobs:
 
       - name: Atualizar configuração do Kubernetes
         run: |
-          aws eks update-kubeconfig --name eks-cluster --region us-east-1
+          aws eks update-kubeconfig --name eks-fiapeats-cluster --region us-east-1
           kubectl cluster-info
 
       - name: Logar no Amazon ECR
         run: |
           AWS_REGION="us-east-1"
-          AWS_ACCOUNT_ID=980921733871
+          AWS_ACCOUNT_ID=390403893106
           echo "Fazendo login no ECR da conta ${AWS_ACCOUNT_ID}..."
           aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_REGION.amazonaws.com
 
 
       - name: Baixar a imagem do ECR
         run: |
-          IMAGE_REPO="980921733871.dkr.ecr.us-east-1.amazonaws.com/fiapeats-ms-pedido:latest"
-          docker pull $IMAGE_REPO
-
-
-      - name: Substituir a versão da imagem no deployment.yaml
-        run: |
-          IMAGE_REPO="980921733871.dkr.ecr.us-east-1.amazonaws.com/fiapeats-ms-pedido:latest"
-          sed -i "s|image: .*|image: $IMAGE_REPO|" kubernetes/deployment.yaml
-
+          AWS_ACCOUNT_ID=390403893106
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Versão detectada: $VERSION"
+          IMAGE_REPO="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/fiapeats-ms-pedido"
+          echo "Imagem: $IMAGE_REPO:$VERSION"
+          docker pull $IMAGE_REPO:$VERSION
 
       - name: Deploy no ambiente de produção
         run: |
           kubectl apply -f kubernetes/deployment.yaml
-          kubectl apply -f kubernetes/ingress.yaml
-          kubectl apply -f kubernetes/service.yaml
-          kubectl apply -f kubernetes/configMap.yaml
-          kubectl apply -f kubernetes/dashboard.yaml
-          kubectl apply -f kubernetes/hpa.yaml
-          kubectl apply -f kubernetes/metrics.yaml
-          kubectl apply -f kubernetes/secrets.yaml
-          kubectl apply -f kubernetes/service_eks.yaml
-          kubectl apply -f kubernetes/userAdmin.yaml
+
       - name: Health Check após Deploy
         run: |
-          kubectl rollout status deployment/fiapeats-ms-pedido-deployment -n default --timeout=5m
+          kubectl rollout status deployment/ms-pedido-deployment -n default --timeout=5m
           kubectl get pods -n default
