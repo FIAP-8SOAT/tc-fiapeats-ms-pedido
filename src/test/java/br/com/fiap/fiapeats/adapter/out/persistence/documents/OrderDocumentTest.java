@@ -9,8 +9,57 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class OrderDocumentTest {
+
+    @Test
+    void testConstructorAndGetters() {
+        UUID orderId = UUID.randomUUID();
+        UUID productId = UUID.randomUUID();
+        String name = "produto";
+        BigDecimal value = BigDecimal.TEN;
+        String taxId = "12345678901";
+        String status = "Pendente";
+        String paymentStatus = "Pendente";
+        int timeWaiting = 10;
+        LocalDateTime createTimestamp = LocalDateTime.now();
+        String qrCode = "codigoQR";
+
+        Category category = new Category(1L, "Bebida");
+
+        ProductDocument productDocument = ProductDocument.builder().build();
+        productDocument.setId(productId.toString());
+        productDocument.setName(name);
+        productDocument.setDescription(name);
+        productDocument.setValue(value);
+        productDocument.setCategory(category);
+        productDocument.setImageUrl("url-image");
+
+        PaymentDocument paymentDocument = PaymentDocument.builder().build();
+        paymentDocument.setPaymentId(1L);
+        paymentDocument.setPaymentStatus(paymentStatus);
+        paymentDocument.setQrCode(qrCode);
+
+        OrderDocument response = OrderDocument.builder().build();
+        response.setId(orderId.toString());
+        response.setProducts(List.of(productDocument));
+        response.setTaxId(taxId);
+        response.setValue(value);
+        response.setOrderStatus(status);
+        response.setPayment(paymentDocument);
+        response.setCreateTimestamp(createTimestamp);
+        response.setTimeWaiting(timeWaiting);
+
+        assertEquals(orderId.toString(), response.getId());
+        assertEquals(1, response.getProducts().size());
+        assertEquals("produto", response.getProducts().get(0).getDescription());
+        assertEquals("12345678901", response.getTaxId());
+        assertEquals(new BigDecimal(10), response.getValue());
+        assertEquals("Pendente", response.getOrderStatus());
+        assertNotNull(response.getCreateTimestamp());
+        assertEquals(10, response.getTimeWaiting());
+    }
 
     @Test
     void testCreateOrderDocument() {

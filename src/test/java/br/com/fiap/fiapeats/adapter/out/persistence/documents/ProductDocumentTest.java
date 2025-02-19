@@ -17,6 +17,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductDocumentTest {
 
     @Test
+    void testConstructorAndGetters() {
+        Category category = new Category(1L, "Categoria 1");
+        ProductDocument product = ProductDocument.builder()
+                .id("prod1")
+                .name("Produto 1")
+                .description("Descrição do produto 1")
+                .value(new BigDecimal("100.00"))
+                .category(category)
+                .imageUrl("http://example.com/produto1.jpg")
+                .build();
+
+        assertEquals("prod1", product.getId());
+        assertEquals("Produto 1", product.getName());
+        assertEquals("Descrição do produto 1", product.getDescription());
+        assertEquals(new BigDecimal("100.00"), product.getValue());
+        assertEquals(category, product.getCategory());
+        assertEquals("http://example.com/produto1.jpg", product.getImageUrl());
+    }
+
+    @Test
+    void testNoArgsConstructor() {
+        ProductDocument product = ProductDocument.builder().build();
+
+        assertNull(product.getId());
+        assertNull(product.getName());
+        assertNull(product.getDescription());
+        assertNull(product.getValue());
+        assertNull(product.getCategory());
+        assertNull(product.getImageUrl());
+    }
+
+    @Test
     void testProductDocumentCreationUsingBuilder() {
         Category category = new Category(1L, "Food");
         String productId = "product-123";
@@ -81,6 +113,26 @@ class ProductDocumentTest {
                 .build();
 
         assertEquals(productDocument, productDocument2);
+    }
+
+    @Test
+    void testToString() {
+        Category category = new Category(1L, "Categoria 1");
+        ProductDocument product = ProductDocument.builder()
+                .id("prod1")
+                .name("Produto 1")
+                .description("Descrição do produto 1")
+                .value(new BigDecimal("100.00"))
+                .category(category)
+                .imageUrl("http://example.com/produto1.jpg")
+                .build();
+
+        String toStringOutput = product.toString();
+        assertTrue(toStringOutput.contains("prod1"));
+        assertTrue(toStringOutput.contains("Produto 1"));
+        assertTrue(toStringOutput.contains("100.00"));
+        assertTrue(toStringOutput.contains("Categoria 1"));
+        assertTrue(toStringOutput.contains("http://example.com/produto1.jpg"));
     }
 
 }
