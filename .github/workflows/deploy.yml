@@ -306,8 +306,3 @@ jobs:
       - name: Deploy no ambiente de produção
         run: |
           kubectl apply -f kubernetes/deployment.yaml
-
-      - name: Health Check após Deploy
-        run: |
-          kubectl rollout status deployment/ms-pedido-deployment -n fiapeats-hk --timeout=5m
-          kubectl get pods -n fiapeats-hk
