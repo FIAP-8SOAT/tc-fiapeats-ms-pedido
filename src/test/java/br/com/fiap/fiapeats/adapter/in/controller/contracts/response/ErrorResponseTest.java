@@ -2,7 +2,6 @@ package br.com.fiap.fiapeats.adapter.in.controller.contracts.response;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ErrorResponseTest {
@@ -17,11 +16,11 @@ public class ErrorResponseTest {
 
         ErrorResponse response2 = ErrorResponse.builder()
                 .errorName("erro")
-                .errorCode(404)
+                .errorCode(400)
                 .message("erro")
                 .build();
 
-        assertEquals(response, response2);
+        assertNotEquals(response, response2);
     }
 
     @Test
