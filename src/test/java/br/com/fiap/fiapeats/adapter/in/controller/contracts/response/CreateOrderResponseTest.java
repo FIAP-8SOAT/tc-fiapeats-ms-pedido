@@ -1,4 +1,4 @@
-package br.com.fiap.fiapeats.adapter.in.controller.response;
+package br.com.fiap.fiapeats.adapter.in.controller.contracts.response;
 
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CreateOrderResponse;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class CreateOrderResponseTest {
         LocalDateTime createTimestamp = LocalDateTime.now();
         String qrCode = "QR12345";
 
-        CreateOrderResponse response = CreateOrderResponse.builder().build();
+        CreateOrderResponse response = new CreateOrderResponse();
         response.setOrderId(orderId);
         response.setStatus(status);
         response.setTaxId(taxId);

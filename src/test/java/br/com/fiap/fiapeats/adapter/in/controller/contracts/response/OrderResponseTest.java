@@ -1,4 +1,4 @@
-package br.com.fiap.fiapeats.adapter.in.controller.response;
+package br.com.fiap.fiapeats.adapter.in.controller.contracts.response;
 
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CategoryOrderResponse;
 import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.OrderResponse;
