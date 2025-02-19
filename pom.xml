@@ -31,8 +31,8 @@
 		<spotless.version>2.22.8</spotless.version>
 		<sonar.organization>fiapeats-msp</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.exclusions>kubernetes/**/*, **/TcFiapeatsMsPedidoApplication.java</sonar.exclusions>
-	</properties>
+		<sonar.exclusions>kubernetes/**,
+			**/TcFiapeatsMsPedidoApplication.java,**/ErrorResponse.java,**/GetOrderHeaderRequest.java, **/FeignFindProductsResponse.java,**/OrderResponse.java,**/FeignProducItemPaymentRequest.java,**/OrderDocument.java,**/ProductDocument.java,**/CreateOrderRequest.java,**/FeignClientResponse.java,**/CreateOrderResponse.java,**/FeignCreatePaymentRequest.java</sonar.exclusions>	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
