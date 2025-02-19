@@ -1,19 +1,121 @@
 package br.com.fiap.fiapeats.adapter.in.controller.contracts.response;
 
-import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.CategoryOrderResponse;
-import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.OrderResponse;
-import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.PaymentOrderResponse;
-import br.com.fiap.fiapeats.adapter.in.controller.contracts.response.ProductOrderResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderResponseTest {
+
+    private OrderResponse order;
+
+    @BeforeEach
+    void setUp() {
+        order = OrderResponse.builder()
+                .id(UUID.randomUUID())
+                .products(Collections.singletonList(ProductOrderResponse.builder().build()))
+                .taxId("123.456.789-00")
+                .value(BigDecimal.valueOf(99.99))
+                .orderStatus("CONFIRMED")
+                .payment(PaymentOrderResponse.builder().build())
+                .createTimestamp(LocalDateTime.now())
+                .timeWaiting(15)
+                .build();
+    }
+
+    @Test
+    void testGettersAndSetters() {
+        OrderResponse newOrder = OrderResponse.builder().build();
+        UUID id = UUID.randomUUID();
+        LocalDateTime timestamp = LocalDateTime.now();
+        newOrder.setId(id);
+        newOrder.setProducts(List.of(ProductOrderResponse.builder().build()));
+        newOrder.setTaxId("987.654.321-00");
+        newOrder.setValue(BigDecimal.valueOf(149.99));
+        newOrder.setOrderStatus("SHIPPED");
+        newOrder.setPayment(PaymentOrderResponse.builder().build());
+        newOrder.setCreateTimestamp(timestamp);
+        newOrder.setTimeWaiting(30);
+
+        assertThat(newOrder.getId()).isEqualTo(id);
+        assertThat(newOrder.getProducts()).isNotNull();
+        assertThat(newOrder.getTaxId()).isEqualTo("987.654.321-00");
+        assertThat(newOrder.getValue()).isEqualByComparingTo(BigDecimal.valueOf(149.99));
+        assertThat(newOrder.getOrderStatus()).isEqualTo("SHIPPED");
+        assertThat(newOrder.getPayment()).isNotNull();
+        assertThat(newOrder.getCreateTimestamp()).isEqualTo(timestamp);
+        assertThat(newOrder.getTimeWaiting()).isEqualTo(30);
+    }
+
+    @Test
+    void testBuilder() {
+        assertThat(order.getId()).isNotNull();
+        assertThat(order.getProducts()).isNotNull();
+        assertThat(order.getTaxId()).isEqualTo("123.456.789-00");
+        assertThat(order.getValue()).isEqualByComparingTo(BigDecimal.valueOf(99.99));
+        assertThat(order.getOrderStatus()).isEqualTo("CONFIRMED");
+        assertThat(order.getPayment()).isNotNull();
+        assertThat(order.getCreateTimestamp()).isNotNull();
+        assertThat(order.getTimeWaiting()).isEqualTo(15);
+    }
+
+    @Test
+    void testEqualsAndHashCode() {
+        UUID id = UUID.randomUUID();
+        LocalDateTime timestamp = LocalDateTime.now();
+        OrderResponse order1 = OrderResponse.builder()
+                .id(id)
+                .products(Collections.singletonList(ProductOrderResponse.builder().build()))
+                .taxId("123.456.789-00")
+                .value(BigDecimal.valueOf(99.99))
+                .orderStatus("CONFIRMED")
+                .payment(PaymentOrderResponse.builder().build())
+                .createTimestamp(timestamp)
+                .timeWaiting(15)
+                .build();
+
+        OrderResponse order2 = OrderResponse.builder()
+                .id(id)
+                .products(Collections.singletonList(ProductOrderResponse.builder().build()))
+                .taxId("123.456.789-00")
+                .value(BigDecimal.valueOf(99.99))
+                .orderStatus("CONFIRMED")
+                .payment(PaymentOrderResponse.builder().build())
+                .createTimestamp(timestamp)
+                .timeWaiting(15)
+                .build();
+
+        OrderResponse order3 = OrderResponse.builder()
+                .id(UUID.randomUUID())
+                .products(Collections.singletonList(ProductOrderResponse.builder().build()))
+                .taxId("987.654.321-00")
+                .value(BigDecimal.valueOf(149.99))
+                .orderStatus("SHIPPED")
+                .payment(PaymentOrderResponse.builder().build())
+                .createTimestamp(LocalDateTime.now())
+                .timeWaiting(30)
+                .build();
+
+        assertThat(order1).isEqualTo(order2);
+        assertThat(order1.hashCode()).isEqualTo(order2.hashCode());
+        assertThat(order1).isNotEqualTo(order3);
+        assertThat(order1.hashCode()).isNotEqualTo(order3.hashCode());
+    }
+
+    @Test
+    void testToString2() {
+        String toString = order.toString();
+        assertThat(toString).contains("taxId=123.456.789-00");
+        assertThat(toString).contains("orderStatus=CONFIRMED");
+        assertThat(toString).contains("value=99.99");
+    }
 
     @Test
     void testOrderResponse() {
