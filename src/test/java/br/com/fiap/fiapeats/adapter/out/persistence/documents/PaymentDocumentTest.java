@@ -83,7 +83,6 @@ class PaymentDocumentTest {
         assertThat(payment1).isEqualTo(payment2).hasSameHashCodeAs(payment2).isNotEqualTo(payment3);
         assertThat(payment1.hashCode()).isNotEqualTo(payment3.hashCode());
     }
-
     @Test
     void testToString() {
         String toString = payment.toString();
