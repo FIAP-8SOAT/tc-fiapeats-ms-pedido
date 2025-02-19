@@ -1,40 +1,92 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fiapeats-ms-pedido-deployment
+  name: ms-pedido-deployment
+  namespace: fiapeats-hk
   labels:
-    app: fiapeats-ms-pedido
+    app: ms-pedido
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fiapeats-ms-pedido
+      app: ms-pedido
   template:
     metadata:
       labels:
-        app: fiapeats-ms-pedido
+        app: ms-pedido
     spec:
       containers:
-        - name: fiapeats-ms-pedido-container
-          image: 980921733871.dkr.ecr.us-east-1.amazonaws.com/fiapeats-ms-pedido:latest
+        - name: ms-pedido-container
+          image: dilanclima/ms-pedido:latest
           ports:
             - containerPort: 8080
+          env:
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.username
+            - name: DATASOURCE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.host
+            - name: DATASOURCE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.port
+            - name: DATASOURCE
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.database
+            - name: DATASOURCE_AUTH
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.authentication-database
+            - name: FEIGN_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.url-base
+            - name: FEIGN_BASE_URL_MS_CLIENTE
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.url-ms-cliente
+            - name: FEIGN_BASE_URL_MS_PRODUTO
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.url-ms-produto
+            - name: FEIGN_BASE_URL_MS_PAGAMENTO
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: ms-pedido.url-ms-pagamento
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: ms-pedido.password
           resources:
             limits:
               memory: "512Mi"
               cpu: "500m"
             requests:
-              memory: "256Mi"
-              cpu: "250m"
+              memory: "512Mi"
+              cpu: "500m"
           readinessProbe:
             httpGet:
-              path: /fiapeats/actuator/health
+              path: /mspedido/actuator/health
               port: 8080
-            initialDelaySeconds: 90
+            initialDelaySeconds: 105
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /fiapeats/actuator/health
+              path: /mspedido/actuator/health
               port: 8080
             initialDelaySeconds: 105
             periodSeconds: 10
