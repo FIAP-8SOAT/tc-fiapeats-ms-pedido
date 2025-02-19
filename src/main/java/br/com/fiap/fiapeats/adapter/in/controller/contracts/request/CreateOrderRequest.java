@@ -18,7 +18,6 @@ import lombok.*;
 @NoArgsConstructor
 @Data
 @Builder
-@Generated("lombok")
 public class CreateOrderRequest {
   @Size(min = 1, message = "a lista deve conter pelo menos 1 produto")
   @ArraySchema(

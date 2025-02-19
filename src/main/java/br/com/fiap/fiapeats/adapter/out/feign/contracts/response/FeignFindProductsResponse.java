@@ -10,7 +10,6 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Generated("lombok")
 public class FeignFindProductsResponse {
   private String id;
 

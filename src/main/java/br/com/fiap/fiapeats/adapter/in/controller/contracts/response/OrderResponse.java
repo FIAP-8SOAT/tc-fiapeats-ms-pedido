@@ -13,7 +13,6 @@ import jakarta.annotation.Generated;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
-@Generated("lombok")
 public class OrderResponse {
 
   @JsonProperty("id")

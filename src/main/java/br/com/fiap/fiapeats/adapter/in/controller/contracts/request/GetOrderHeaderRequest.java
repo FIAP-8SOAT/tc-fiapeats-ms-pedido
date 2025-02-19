@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Generated("lombok")
 public class GetOrderHeaderRequest {
 
   private String produtoId;
