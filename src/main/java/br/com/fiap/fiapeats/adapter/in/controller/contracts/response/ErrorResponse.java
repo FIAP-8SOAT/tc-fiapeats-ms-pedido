@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
+import jakarta.annotation.Generated;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
+@Generated("lombok")
 public class ErrorResponse {
 
   private final LocalDateTime timestamp = LocalDateTime.now();

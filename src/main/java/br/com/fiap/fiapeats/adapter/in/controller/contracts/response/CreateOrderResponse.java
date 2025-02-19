@@ -2,15 +2,15 @@ package br.com.fiap.fiapeats.adapter.in.controller.contracts.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import jakarta.annotation.Generated;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
+@Generated("lombok")
 public class CreateOrderResponse {
   @JsonProperty("idPedido")
   private String orderId;

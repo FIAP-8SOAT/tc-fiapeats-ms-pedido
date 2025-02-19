@@ -10,15 +10,15 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import jakarta.annotation.Generated;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
+@Generated("lombok")
 public class CreateOrderRequest {
   @Size(min = 1, message = "a lista deve conter pelo menos 1 produto")
   @ArraySchema(

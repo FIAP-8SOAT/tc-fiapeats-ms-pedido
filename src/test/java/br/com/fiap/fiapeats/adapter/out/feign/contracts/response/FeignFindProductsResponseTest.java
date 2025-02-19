@@ -6,8 +6,42 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class FeignFindProductsResponseTest {
+
+    @Test
+    void testConstructorAndGetters() {
+        FeignFindProductsCategoryResponse category = new FeignFindProductsCategoryResponse("1", "Categoria 1");
+
+        FeignFindProductsResponse response = FeignFindProductsResponse.builder()
+                .id("prod1")
+                .name("Produto 1")
+                .description("Descrição do produto 1")
+                .value(new BigDecimal("100.00"))
+                .category(category)
+                .imageUrl("http://example.com/produto1.jpg")
+                .build();
+
+        assertEquals("prod1", response.getId());
+        assertEquals("Produto 1", response.getName());
+        assertEquals("Descrição do produto 1", response.getDescription());
+        assertEquals(new BigDecimal("100.00"), response.getValue());
+        assertEquals(category, response.getCategory());
+        assertEquals("http://example.com/produto1.jpg", response.getImageUrl());
+    }
+
+    @Test
+    void testNoArgsConstructor() {
+        FeignFindProductsResponse response = new FeignFindProductsResponse();
+
+        assertNull(response.getId());
+        assertNull(response.getName());
+        assertNull(response.getDescription());
+        assertNull(response.getValue());
+        assertNull(response.getCategory());
+        assertNull(response.getImageUrl());
+    }
 
     @Test
     void testEquals_sameValues_shouldReturnTrue() {
